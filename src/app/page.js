@@ -1,4 +1,3 @@
-
 import Hero from "./Components/Hero";
 import Sektion2 from "./Components/Sektion2";
 
