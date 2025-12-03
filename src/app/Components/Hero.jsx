@@ -89,19 +89,19 @@ const Hero = () => {
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
-      {/* Logo med fold-in animation */}
+      {/* Logo med fold-in animation - responsiv størrelse */}
       <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 transition-all duration-1000 ${showLogo ? "opacity-100 scale-100" : "opacity-0 scale-0"}`}>
-        <Image src="/assets/icon/Logo.svg" width={800} height={400} alt="Logo" className="transform transition-transform duration-1000" />
+        <Image src="/assets/icon/Logo.svg" width={400} height={200} alt="Logo" className="w-80 h-auto md:w-96 lg:w-[800px] transform transition-transform duration-1000" />
       </div>
 
-      {/* Tagline med animation */}
-      <h2 className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 mt-10 text-3xl z-10 uppercase font-[Ubuntu] text-white text-center transition-all duration-800 ${showTagline ? "opacity-100 translate-y-1/2" : "opacity-0 -translate-y-full"}`} style={{ letterSpacing: "1.5rem" }}>
+      {/* Tagline med animation - responsiv tekst */}
+      <h2 className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 mt-8 md:mt-10 text-lg md:text-2xl lg:text-3xl z-10 uppercase font-[Ubuntu] text-white text-center transition-all duration-800 px-4 ${showTagline ? "opacity-100 translate-y-1/2" : "opacity-0 -translate-y-full"}`} style={{ letterSpacing: "0.3rem" }}>
         Have a good time
       </h2>
 
-      {/* Bottom line med fade-in */}
-      <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 mt-17 z-10 transition-all duration-800 delay-500 ${showTagline ? "opacity-100" : "opacity-0"}`}>
-        <Image src="/assets/bottom_line.png" width={800} height={50} alt="Bottom Line" />
+      {/* Bottom line med fade-in - responsiv størrelse */}
+      <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 mt-14 md:mt-16 lg:mt-17 z-10 transition-all duration-800 delay-500 ${showTagline ? "opacity-100" : "opacity-0"}`}>
+        <Image src="/assets/bottom_line.png" width={300} height={30} alt="Bottom Line" className="w-60 h-auto md:w-80 lg:w-[800px]" />
       </div>
 
       {/* Background images */}
