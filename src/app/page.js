@@ -6,6 +6,7 @@ import Newsletter from "./Components/Newsletter";
 import Footer from "./Components/Footer";
 import Header from "./Components/Header";
 import Testimonials from "./Components/Testimonials";
+import RecentBlog from "./Components/RecentBlog";
 
 const Home = () => {
   return (
@@ -18,6 +19,7 @@ const Home = () => {
       <Sektion2 />
       <Sektion3 />
       <Testimonials />
+      <RecentBlog />
       <Newsletter />
       <Footer />
     </>
