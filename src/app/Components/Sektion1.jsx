@@ -27,8 +27,8 @@ const ImageCard = ({ src, alt, title, description }) => {
   });
 
   return (
-    <div className="relative overflow-hidden cursor-pointer group" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} onTouchStart={() => setIsHovered(true)} onTouchEnd={() => setIsHovered(false)}>
-      <Image src={src} width={500} height={300} alt={alt} className="w-full h-auto object-cover" />
+    <div className="relative overflow-hidden cursor-pointer group w-90 h-100" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} onTouchStart={() => setIsHovered(true)} onTouchEnd={() => setIsHovered(false)}>
+      <Image src={src} width={500} height={300} alt={alt} className="w-full h-full object-cover" />
 
       {/* Sort overlay */}
       <animated.div style={overlayAnimation} className="absolute inset-0 bg-black bg-opacity-80 flex flex-col justify-center items-center">
