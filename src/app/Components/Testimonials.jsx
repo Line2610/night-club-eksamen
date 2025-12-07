@@ -34,8 +34,7 @@ const Testimonials = () => {
     <section className="bg-black py-20 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0">
-        <Image src="/assets/bg/footerbg.jpg" fill alt="Background" className="object-cover opacity-30" />
-        <div className="absolute inset-0 bg-black/60"></div>
+        <Image src="/assets/bg/footerbg.jpg" alt="Background" className="object-cover opacity-10" />
       </div>
 
       <div className="max-w-4xl mx-auto text-center relative z-10 px-6">
