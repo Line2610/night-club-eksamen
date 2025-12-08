@@ -53,7 +53,7 @@ const Header = () => {
                 <Image src="/assets/bottom_line2.png" width={50} height={50} alt="bottom line" className={`mt-1 transition-opacity ${isActive("/Blog-post") ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
               </li>
               <li className="flex flex-col items-center group">
-                <a href="/book-table" className={`hover:text-[#FF2A70] transition-all uppercase ${isActive("/book-table") ? "text-[#FF2A70]" : ""}`}>
+                <a href="/Book-table" className={`hover:text-[#FF2A70] transition-all uppercase ${isActive("/Book-table") ? "text-[#FF2A70]" : ""}`}>
                   Book table
                 </a>
                 <Image src="/assets/bottom_line2.png" width={50} height={50} alt="bottom line" className={`mt-1 transition-opacity ${isActive("/book-table") ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
