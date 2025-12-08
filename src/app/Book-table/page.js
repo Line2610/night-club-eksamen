@@ -1,8 +1,10 @@
+table-Line
 'use client';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
+import Hero2 from "../Components/Hero2";
 
 export default function BookTable() {
   const [selectedTable, setSelectedTable] = useState(null);
