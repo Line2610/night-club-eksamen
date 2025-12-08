@@ -64,12 +64,7 @@ const Header = () => {
                 </a>
                 <Image src="/assets/bottom_line2.png" width={50} height={50} alt="bottom line" className={`mt-1 transition-opacity ${isActive("/Contact-us") ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
               </li>
-              <li className="flex flex-col items-center group">
-                <a href="/login" className={`hover:text-[#FF2A70] transition-all uppercase ${isActive("/login") ? "text-[#FF2A70]" : ""}`}>
-                  Log in
-                </a>
-                <Image src="/assets/bottom_line2.png" width={50} height={50} alt="bottom line" className={`mt-1 transition-opacity ${isActive("/login") ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
-              </li>
+              
             </ul>
           </nav>
 
@@ -114,11 +109,6 @@ const Header = () => {
                 <li>
                   <a href="/contact-us" className={`block hover:text-pink-500 transition-colors ${isActive("/contact-us") ? "text-pink-500" : ""}`} onClick={toggleMenu}>
                     CONTACT US
-                  </a>
-                </li>
-                <li>
-                  <a href="/login" className={`block hover:text-pink-500 transition-colors ${isActive("/login") ? "text-pink-500" : ""}`} onClick={toggleMenu}>
-                    LOG IN
                   </a>
                 </li>
               </ul>
