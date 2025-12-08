@@ -64,7 +64,6 @@ const Header = () => {
                 </a>
                 <Image src="/assets/bottom_line2.png" width={50} height={50} alt="bottom line" className={`mt-1 transition-opacity ${isActive("/Contact-us") ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
               </li>
-             
             </ul>
           </nav>
 
@@ -111,7 +110,6 @@ const Header = () => {
                     CONTACT US
                   </a>
                 </li>
-                
               </ul>
             </nav>
           </div>
