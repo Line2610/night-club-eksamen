@@ -23,8 +23,8 @@ function EventCard({ event, index, isHovered, onHover }) {
 
   return (
     <div className="min-w-[50%] px-3" onMouseEnter={() => onHover(index)} onMouseLeave={() => onHover(null)}>
-      <div className="relative overflow-hidden h-96">
-        <Image src={event.asset.url} alt={event.title} fill className="object-contain scale-110" />
+      <div className="relative h-96 bg-gray-800">
+        <img src={event.asset.url} alt={event.title} className="w-full h-full object-cover" />
 
         {/* Overlay med knap, titel og beskrivelse - vises ved hover */}
         <animated.div style={overlayAnimation} className="absolute inset-0 flex flex-col items-center justify-end border-t-2 border-[#FF2A70]/50 pointer-events-none">
