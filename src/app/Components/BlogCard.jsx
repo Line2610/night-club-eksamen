@@ -6,7 +6,7 @@ const BlogCard = ({ post, index, isLast = false }) => {
         <div className={`bg-black flex flex-col md:flex-row items-stretch ${index % 2 !== 0 ? 'md:flex-row-reverse' : ''} ${index === 0 ? 'mt-8 md:mt-16' : ''} ${isLast ? 'mb-8 md:mb-16' : ''}`}>
             {/* Image Section */}
             <div className="relative w-full md:w-1/2 h-80">
-               <Link href={`/Blog-post/${post.id}`}>
+               <Link href={`/Blog-post/${post.id}`}> {/*url parameter*/}
                     <Image
                         src={post.assets?.url || '/assets/content-img/blog_full1.jpg'}
                         alt={post.title}
@@ -36,8 +36,9 @@ const BlogCard = ({ post, index, isLast = false }) => {
             <div className='flex justify-end'>
                 <div className="inline-block">
                     <div className="border-t border-white w-30 mb-2"></div>
+                    {/*url parameter*/}
                     <Link 
-                        href={`/Blog-post/${post.id}`}
+                        href={`/Blog-post/${post.id}`} 
                         className="bg-transparent font-bold text-center text-white text-sm uppercase block hover:text-[#FF2A70] py-2"
                     >
                         READ MORE
