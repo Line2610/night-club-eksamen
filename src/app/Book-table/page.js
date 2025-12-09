@@ -104,14 +104,7 @@ export default function BookTable() {
     <>
       <Header />
       <div className="min-h-screen bg-black text-white">
-        {/* Hero Section */}
-      <div 
-        className="relative h-[300px] flex items-center justify-center bg-cover bg-center" 
-        style={{ backgroundImage: "url('/assets/bg/hero-bg.jpg')" }}
-      >
-        <div className="absolute inset-0 bg-black/60"></div>
-      {/* Hero Content */}
-      </div>
+       <Hero2 title="Book Table" />
 
       {/* Table Grid */}
       <div className="max-w-6xl mx-auto px-5 py-16">
