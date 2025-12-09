@@ -7,6 +7,7 @@ import Footer from "./Components/Footer";
 import Header from "./Components/Header";
 import Testimonials from "./Components/Testimonials";
 import RecentBlog from "./Components/RecentBlog";
+import LastestVideo from "./Components/LatestVideo";
 
 const Home = () => {
   return (
@@ -18,6 +19,7 @@ const Home = () => {
       <Sektion1 />
       <Sektion2 />
       <Sektion3 />
+      <LastestVideo />
       <Testimonials />
       <RecentBlog />
       <Newsletter />
