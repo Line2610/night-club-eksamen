@@ -25,7 +25,7 @@ const ContactForm = () => {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         
         // Validate form
@@ -44,18 +44,33 @@ const ContactForm = () => {
             return;
         }
 
-        // Handle form submission
-        console.log('Form submitted:', formData);
-        
-        // Reset form
-        setFormData({
-            name: '',
-            email: '',
-            comment: ''
-        });
-        setErrors({});
-        
-        alert('Thank you for your message!');
+        try {
+            // Send data to API
+            const response = await fetch('http://localhost:4000/contact_messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to send message');
+            }
+
+            // Reset form on success
+            setFormData({
+                name: '',
+                email: '',
+                comment: ''
+            });
+            setErrors({});
+            
+            alert('Thank you for your message!');
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            alert('Failed to send message. Please try again.');
+        }
     };
 
     return (
