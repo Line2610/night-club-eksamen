@@ -48,7 +48,6 @@ export default function App() {
 
   const [currentTrack, setCurrentTrack] = useState(tracks[0]);
   const [hoveredTrack, setHoveredTrack] = useState(null);
-  const [scrollPosition, setScrollPosition] = useState(0);
 
   const handleTrackClick = (track) => {
     setCurrentTrack(track);
