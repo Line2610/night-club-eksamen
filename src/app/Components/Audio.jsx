@@ -93,7 +93,6 @@ export default function App() {
             </h3>
             <AudioPlayer
               key={currentTrack.id}
-              autoPlay
               src={currentTrack.audio}
               onPlay={e => console.log("onPlay")}
               showJumpControls={true}
