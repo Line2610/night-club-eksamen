@@ -24,7 +24,7 @@ function EventCard({ event, index, isHovered, onHover }) {
   const overlayAnimation = useSpring({
     from: { opacity: 0 },
     to: { opacity: isHovered ? 1 : 0 },
-    config: { duration: 2000 },
+    config: { duration: 1000 },
   });
 
   return (
