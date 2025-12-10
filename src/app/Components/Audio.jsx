@@ -77,7 +77,7 @@ export default function App() {
         </h2>
         
         {/* Top row: Main image and audio player */}
-        <div className="flex flex-col lg:flex-row gap-8 items-start mb-0">
+        <div className="flex flex-col lg:flex-row gap-8 items-start mb-0 ml-17 mr-17">
           <div className="shrink-0 w-full lg:w-[300px]">
             <Image 
               src={currentTrack.image}
