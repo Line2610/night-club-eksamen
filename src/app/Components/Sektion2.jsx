@@ -15,6 +15,11 @@ function EventCard({ event, index, isHovered, onHover }) {
   const day = date.getDate();
   const month = date.toLocaleString("en-US", { month: "short" });
   const time = date.toLocaleString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
+  
+  const truncateText = (text, maxLength = 100) => {
+    if (!text) return '';
+    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+  };
 
   const overlayAnimation = useSpring({
     opacity: isHovered ? 1 : 0,
@@ -24,7 +29,7 @@ function EventCard({ event, index, isHovered, onHover }) {
   return (
     <div className="min-w-[50%] px-3" onMouseEnter={() => onHover(index)} onMouseLeave={() => onHover(null)}>
       <div className="relative h-96 bg-gray-800">
-        <img src={event.asset.url} alt={event.title} className="w-full h-full object-cover" />
+        <Image src={event.asset.url} alt={event.title} fill className="object-cover" unoptimized />
 
         {/* Overlay med knap, titel og beskrivelse - vises ved hover */}
         <animated.div style={overlayAnimation} className="absolute inset-0 flex flex-col items-center justify-end border-t-2 border-[#FF2A70]/50 pointer-events-none">
@@ -36,8 +41,8 @@ function EventCard({ event, index, isHovered, onHover }) {
 
           <button className="bg-[#FF2A70] text-white px-6 py-2 font-semibold hover:bg-[#e02563] transition-colors mb-20 pointer-events-auto">Book Now</button>
           <div className="bg-black/80 w-full py-6 px-8 pb-15 border-b-2 border-[#FF2A70]">
-            <h3 className="text-white text-xl font-bold mb-2">NIGHT CLUB</h3>
-            <p className="text-white text-xs leading-relaxed">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+            <h3 className="text-white text-xl font-bold mb-2">{event.title}</h3>
+            <p className="text-white text-xs leading-relaxed">{truncateText(event.content || event.description, 120)}</p>
           </div>
         </animated.div>
 
