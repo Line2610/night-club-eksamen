@@ -29,7 +29,7 @@ function EventCard({ event, index, isHovered, onHover }) {
 
   return (
     <div className="min-w-[50%] px-3" onMouseEnter={() => onHover(index)} onMouseLeave={() => onHover(null)}>
-      <div className="relative h-96 bg-gray-800">
+      <div className="relative h-96">
         <Image src={event.asset.url} alt={event.title} fill className="object-cover" unoptimized />
 
         {/* Overlay med knap, titel og beskrivelse - vises ved hover */}
@@ -91,7 +91,9 @@ export default function Sektion2() {
 
   return (
     <section className="relative py-16">
-      <Image src="/assets/bg/slider_bg_overlay.png" alt="background overlay" fill className="object-cover -z-10" />
+      <Image src="/assets/bg/slider_bg_overlay.png" alt="background overlay" fill className="object-cover -z-10 " />
+      {/* Sort slør over baggrunden */}
+      <div className="absolute inset-0 bg-black/75 -z-5"></div>
 
       <h2 className="text-center text-3xl mb-2 text-white">EVENTS OF THE MONTH</h2>
       <Image src="/assets/bottom_line2.png" alt="Underline" width={200} height={5} className="mx-auto mb-15" />
