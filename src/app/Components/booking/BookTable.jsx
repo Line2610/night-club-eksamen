@@ -28,15 +28,11 @@ export default function BookTable() {
   }, []);
 
   const fetchReservations = async () => {
-    try {
-      const response = await fetch("http://localhost:4000/reservations");
-      if (response.ok) {
-        const data = await response.json();
-        // Gem alle reservationer med dato og bordnummer
-        setReservations(data.filter(res => res.table && res.date));
-      }
-    } catch (error) {
-      console.error("Error fetching reservations:", error);
+    const response = await fetch("http://localhost:4000/reservations");
+    if (response.ok) {
+      const data = await response.json();
+      // Gem alle reservationer med dato og bordnummer
+      setReservations(data.filter(res => res.table && res.date));
     }
   };
 
@@ -163,39 +159,33 @@ export default function BookTable() {
       comment: formData.comment
     };
 
-    try {
-      const response = await fetch("http://localhost:4000/reservations", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(bookingData),
-      });
+    const response = await fetch("http://localhost:4000/reservations", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(bookingData),
+    });
 
-      if (response.ok) {
-        const result = await response.json();
-        setSuccessMessage(`Table ${formData.tableNumber} booked successfully for ${formData.date}!`);
-        setFormData({
-          name: '',
-          email: '',
-          tableNumber: '',
-          guests: '',
-          date: '',
-          contact: '',
-          comment: ''
-        });
-        setSelectedTable(null);
-        setErrors({});
-        fetchReservations();
-        setTimeout(() => setSuccessMessage(''), 5000);
-      } else {
-        const errorData = await response.json();
-        setErrorMessage(errorData.message || "Table is already booked for this date. Please select another table or date.");
-        setTimeout(() => setErrorMessage(''), 5000);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      setErrorMessage("Error submitting booking. Please try again.");
+    if (response.ok) {
+      const result = await response.json();
+      setSuccessMessage(`Table ${formData.tableNumber} booked successfully for ${formData.date}!`);
+      setFormData({
+        name: '',
+        email: '',
+        tableNumber: '',
+        guests: '',
+        date: '',
+        contact: '',
+        comment: ''
+      });
+      setSelectedTable(null);
+      setErrors({});
+      fetchReservations();
+      setTimeout(() => setSuccessMessage(''), 5000);
+    } else {
+      const errorData = await response.json();
+      setErrorMessage(errorData.message || "Table is already booked for this date. Please select another table or date.");
       setTimeout(() => setErrorMessage(''), 5000);
     }
   };

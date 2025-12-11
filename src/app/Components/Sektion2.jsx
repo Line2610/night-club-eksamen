@@ -28,7 +28,7 @@ function EventCard({ event, index, isHovered, onHover }) {
   });
 
   return (
-    <div className="min-w-[50%] px-3" onMouseEnter={() => onHover(index)} onMouseLeave={() => onHover(null)}>
+    <div className="min-w-full md:min-w-[50%] px-3" onMouseEnter={() => onHover(index)} onMouseLeave={() => onHover(null)}>
       <div className="relative h-96">
         <Image src={event.asset.url} alt={event.title} fill className="object-cover" unoptimized />
 
@@ -65,6 +65,18 @@ export default function Sektion2() {
   const [events, setEvents] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     getEvents().then((data) => {
@@ -87,7 +99,8 @@ export default function Sektion2() {
     });
   }, []);
 
-  const totalSlides = Math.ceil(events.length / 2);
+  const eventsPerSlide = isMobile ? 1 : 2;
+  const totalSlides = Math.ceil(events.length / eventsPerSlide);
 
   return (
     <section className="relative py-16">
@@ -111,7 +124,7 @@ export default function Sektion2() {
         {/* Navigation dots */}
         <div className="flex justify-center gap-2">
           {Array.from({ length: totalSlides }).map((_, index) => (
-            <button key={index} onClick={() => setCurrentSlide(index)} className={`w-3 h-3 transition-colors ${index === currentSlide ? "bg-[#FF2A70]" : "bg-white"}`} aria-label={`Go to slide ${index + 1}`} />
+            <button key={index} onClick={() => setCurrentSlide(index)} className={`w-8 h-2 md:w-10 md:h-3 transition-colors ${index === currentSlide ? "bg-[#FF2A70]" : "bg-white"}`} aria-label={`Go to slide ${index + 1}`} />
           ))}
         </div>
       </div>

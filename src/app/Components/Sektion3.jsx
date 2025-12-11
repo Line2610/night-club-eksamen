@@ -72,20 +72,20 @@ export default function Sektion3() {
   };
 
   return (
-    <section className="bg-black py-16">
+    <section className="bg-black py-8 md:py-16">
       <div className="w-full">
         {/* Header */}
-        <motion.div className="text-center mb-12" initial={{ opacity: 0, y: -20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
-          <h2 className="text-white text-3xl tracking-wide">NIGHT CLUB GALLERY</h2>
+        <motion.div className="text-center mb-8 md:mb-12 px-4" initial={{ opacity: 0, y: -20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
+          <h2 className="text-white text-2xl md:text-3xl tracking-wide">NIGHT CLUB GALLERY</h2>
           <div className="mx-auto mt-4" style={{ width: "200px" }}>
             <Image src="/assets/bottom_line2.png" alt="Underline" width={200} height={5} className="w-full h-auto" />
           </div>
         </motion.div>
 
         {/* Gallery Grid */}
-        <div className="grid grid-cols-5 grid-rows-4 gap-0 w-full bg-black" style={{ height: "600px" }}>
+        <div className="grid grid-cols-1 md:grid-cols-5 md:grid-rows-4 gap-0 w-full bg-black px-4 md:px-0" style={{ height: "auto" }}>
           {images.map((image, index) => (
-            <motion.div key={index} custom={index} initial="hidden" whileInView="visible" variants={imageVariants} viewport={{ once: false, amount: 0.3 }} className="relative overflow-hidden group bg-black cursor-pointer" style={{ gridArea: image.gridArea }} onClick={() => handleImageClick(image, index)}>
+            <motion.div key={index} custom={index} initial="hidden" whileInView="visible" variants={imageVariants} viewport={{ once: false, amount: 0.3 }} className="relative overflow-hidden group bg-black cursor-pointer h-64 md:h-auto" style={{ gridArea: window.innerWidth >= 768 ? image.gridArea : 'auto' }} onClick={() => handleImageClick(image, index)}>
               <Image src={image.src} alt={`Gallery image ${index + 1}`} fill className="object-cover" unoptimized style={{ objectPosition: "center" }} />
 
               {/* Top border - appears on hover */}
@@ -106,8 +106,8 @@ export default function Sektion3() {
         {/* Modal Popup */}
         <AnimatePresence>
           {selectedImage && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4" onClick={() => setSelectedImage(null)}>
-              <div className="relative flex items-center gap-16">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-2 md:p-4" onClick={() => setSelectedImage(null)}>
+              <div className="relative flex items-center gap-4 md:gap-16">
                 {/* Previous Arrow - outside the card */}
                 <button
                   onClick={(e) => {
@@ -120,7 +120,7 @@ export default function Sektion3() {
                 </button>
 
                 {/* Card with image and content */}
-                <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.8, opacity: 0 }} transition={{ duration: 0.3 }} className="relative max-w-2xl" onClick={(e) => e.stopPropagation()}>
+                <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.8, opacity: 0 }} transition={{ duration: 0.3 }} className="relative max-w-full md:max-w-2xl" onClick={(e) => e.stopPropagation()}>
                   {/* Image with triangle */}
                   <div className="relative">
                     <Image src={selectedImage.src} alt={selectedImage.title} width={600} height={350} className="w-full h-auto object-cover" unoptimized />
@@ -129,11 +129,11 @@ export default function Sektion3() {
                   </div>
 
                   {/* Content - same width as image */}
-                  <div className="bg-black text-white p-8">
-                    <h3 className="text-2xl font-bold mb-4 tracking-wide">{selectedImage.title}</h3>
-                    <p className="text-s text-gray-300 leading-relaxed mb-6">{selectedImage.description}</p>
+                  <div className="bg-black text-white p-4 md:p-8">
+                    <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 tracking-wide">{selectedImage.title}</h3>
+                    <p className="text-xs md:text-s text-gray-300 leading-relaxed mb-4 md:mb-6">{selectedImage.description}</p>
                     <div className="flex justify-end">
-                      <button className="border-white border-t border-b text-white px-8 py-2">READ MORE</button>
+                      <button className="border-white border-t border-b text-white px-4 md:px-8 py-1 md:py-2 text-sm md:text-base">READ MORE</button>
                     </div>
                   </div>
                 </motion.div>
