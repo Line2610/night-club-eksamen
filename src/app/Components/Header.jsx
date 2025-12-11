@@ -47,19 +47,19 @@ const Header = () => {
                 <Image src="/assets/bottom_line2.png" width={50} height={50} alt="bottom line" className={`mt-1 transition-opacity ${isActive("/") ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
               </li>
               <li className="flex flex-col items-center group">
-                <a href="/blog" className={`hover:text-[#FF2A70] pb-1 transition-all uppercase ${isActive("/blog") ? "text-[#FF2A70]" : ""}`}>
+                <a href="/Blog" className={`hover:text-[#FF2A70] pb-1 transition-all uppercase ${isActive("/Blog") ? "text-[#FF2A70]" : ""}`}>
                   Blog
                 </a>
                 <Image src="/assets/bottom_line2.png" width={50} height={50} alt="bottom line" className={`mt-1 transition-opacity ${isActive("/Blog-post") ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
               </li>
               <li className="flex flex-col items-center group">
-                <a href="/book-table" className={`hover:text-[#FF2A70] transition-all uppercase ${isActive("/book-table") ? "text-[#FF2A70]" : ""}`}>
+                <a href="/Book-table" className={`hover:text-[#FF2A70] transition-all uppercase ${isActive("/Book-table") ? "text-[#FF2A70]" : ""}`}>
                   Book table
                 </a>
                 <Image src="/assets/bottom_line2.png" width={50} height={50} alt="bottom line" className={`mt-1 transition-opacity ${isActive("/Book-table") ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
               </li>
               <li className="flex flex-col items-center group">
-                <a href="/contact-us" className={`hover:text-[#FF2A70] transition-all uppercase ${isActive("/contact-us") ? "text-[#FF2A70]" : ""}`}>
+                <a href="/Contact-us" className={`hover:text-[#FF2A70] transition-all uppercase ${isActive("/Contact-us") ? "text-[#FF2A70]" : ""}`}>
                   Contact us
                 </a>
                 <Image src="/assets/bottom_line2.png" width={50} height={50} alt="bottom line" className={`mt-1 transition-opacity ${isActive("/Contact-us") ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
@@ -97,17 +97,17 @@ const Header = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="/blog" className={`block hover:text-pink-500 transition-colors ${isActive("/blog") ? "text-pink-500" : ""}`} onClick={toggleMenu}>
+                  <a href="/Blog" className={`block hover:text-pink-500 transition-colors ${isActive("/Blog") ? "text-pink-500" : ""}`} onClick={toggleMenu}>
                     BLOG
                   </a>
                 </li>
                 <li>
-                  <a href="/book-table" className={`block hover:text-pink-500 transition-colors ${isActive("/book-table") ? "text-pink-500" : ""}`} onClick={toggleMenu}>
+                  <a href="/Book-table" className={`block hover:text-pink-500 transition-colors ${isActive("/Book-table") ? "text-pink-500" : ""}`} onClick={toggleMenu}>
                     BOOK TABLE
                   </a>
                 </li>
                 <li>
-                  <a href="/contact-us" className={`block hover:text-pink-500 transition-colors ${isActive("/contact-us") ? "text-pink-500" : ""}`} onClick={toggleMenu}>
+                  <a href="/Contact-us" className={`block hover:text-pink-500 transition-colors ${isActive("/Contact-us") ? "text-pink-500" : ""}`} onClick={toggleMenu}>
                     CONTACT US
                   </a>
                 </li>
