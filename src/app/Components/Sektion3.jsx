@@ -12,6 +12,7 @@ export default function Sektion3() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [images, setImages] = useState([]);
+  const [isMobile, setIsMobile] = useState(false);
 
   const handleImageClick = (image, index) => {
     setSelectedImage(image);
@@ -31,15 +32,26 @@ export default function Sektion3() {
   };
 
   useEffect(() => {
-    getGallery().then((data) => {
-      const formattedImages = data.slice(0, 7).map((item, index) => ({
-        src: item.asset.url,
-        gridArea: getGridArea(index),
-        title: "NIGHT CLUB PARTY",
-        description: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.",
-      }));
-      setImages(formattedImages);
-    });
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    getGallery()
+      .then((data) => {
+        const formattedImages = data.slice(0, 7).map((item, index) => ({
+          src: item.asset.url,
+          gridArea: getGridArea(index),
+          title: "NIGHT CLUB PARTY",
+          description: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.",
+        }));
+        setImages(formattedImages);
+      })
+      .catch((error) => {
+        console.error("Error fetching gallery:", error);
+      });
   }, []);
 
   const getGridArea = (index) => {
@@ -83,9 +95,9 @@ export default function Sektion3() {
         </motion.div>
 
         {/* Gallery Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-5 md:grid-rows-4 gap-0 w-full bg-black px-4 md:px-0" style={{ height: "auto" }}>
+        <div className="grid grid-cols-1 md:grid-cols-5 md:grid-rows-4 gap-0 w-full bg-black px-4 md:px-0" style={{ minHeight: "800px" }}>
           {images.map((image, index) => (
-            <motion.div key={index} custom={index} initial="hidden" whileInView="visible" variants={imageVariants} viewport={{ once: false, amount: 0.3 }} className="relative overflow-hidden group bg-black cursor-pointer h-64 md:h-auto" style={{ gridArea: window.innerWidth >= 768 ? image.gridArea : 'auto' }} onClick={() => handleImageClick(image, index)}>
+            <motion.div key={index} custom={index} initial="hidden" whileInView="visible" variants={imageVariants} viewport={{ once: false, amount: 0.3 }} className="relative overflow-hidden group bg-black cursor-pointer h-64 md:h-auto" style={{ gridArea: isMobile ? 'auto' : image.gridArea }} onClick={() => handleImageClick(image, index)}>
               <Image src={image.src} alt={`Gallery image ${index + 1}`} fill className="object-cover" unoptimized style={{ objectPosition: "center" }} />
 
               {/* Top border - appears on hover */}
