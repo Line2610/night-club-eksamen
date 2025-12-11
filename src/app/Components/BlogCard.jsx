@@ -1,3 +1,5 @@
+"use client";
+
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -8,10 +10,12 @@ const BlogCard = ({ post, index, isLast = false }) => {
             <div className="relative w-full md:w-1/2 h-80">
                <Link href={`/Blog-post/${post.id}`}> {/*url parameter*/}
                     <Image
-                        src={post.assets?.url || '/assets/content-img/blog_full1.jpg'}
+                        src={post.asset?.url}
                         alt={post.title}
                         fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
                         className="object-cover"
+                        unoptimized
                     />
                 </Link>
             </div>
@@ -36,7 +40,7 @@ const BlogCard = ({ post, index, isLast = false }) => {
             <div className='flex justify-end'>
                 <div className="inline-block">
                     <div className="border-t border-white w-30 mb-2"></div>
-                    {/*url parameter*/}
+                    
                     <Link 
                         href={`/Blog-post/${post.id}`} 
                         className="bg-transparent font-bold text-center text-white text-sm uppercase block hover:text-[#FF2A70] py-2"
