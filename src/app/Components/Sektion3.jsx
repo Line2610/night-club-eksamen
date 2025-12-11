@@ -1,11 +1,17 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
+async function getGallery() {
+  const res = await fetch("http://localhost:4000/gallery", {});
+  return res.json();
+}
 
 export default function Sektion3() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [images, setImages] = useState([]);
 
   const handleImageClick = (image, index) => {
     setSelectedImage(image);
@@ -24,50 +30,30 @@ export default function Sektion3() {
     setSelectedImage(images[prevIndex]);
   };
 
-  const images = [
-    {
-      src: "/assets/content-img/gallery1_big.jpg",
-      gridArea: "1 / 1 / 3 / 2",
-      title: "NIGHT CLUB PARTY",
-      description: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.",
-    },
-    {
-      src: "/assets/content-img/gallery2_big.jpg",
-      gridArea: "1 / 2 / 3 / 3",
-      title: "NIGHT CLUB PARTY",
-      description: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.",
-    },
-    {
-      src: "/assets/content-img/gallery3_big.jpg",
-      gridArea: "1 / 3 / 3 / 5",
-      title: "NIGHT CLUB PARTY",
-      description: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.",
-    },
-    {
-      src: "/assets/content-img/gallery4_big.jpg",
-      gridArea: "1 / 5 / 3 / 6",
-      title: "NIGHT CLUB PARTY",
-      description: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.",
-    },
-    {
-      src: "/assets/content-img/gallery5_big.jpg",
-      gridArea: "3 / 1 / 5 / 2",
-      title: "NIGHT CLUB PARTY",
-      description: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.",
-    },
-    {
-      src: "/assets/content-img/gallery6_big.jpg",
-      gridArea: "3 / 2 / 5 / 4",
-      title: "NIGHT CLUB PARTY",
-      description: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.",
-    },
-    {
-      src: "/assets/content-img/gallery7_big.jpg",
-      gridArea: "3 / 4 / 5 / 6",
-      title: "NIGHT CLUB PARTY",
-      description: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.",
-    },
-  ];
+  useEffect(() => {
+    getGallery().then((data) => {
+      const formattedImages = data.slice(0, 7).map((item, index) => ({
+        src: item.asset.url,
+        gridArea: getGridArea(index),
+        title: "NIGHT CLUB PARTY",
+        description: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.",
+      }));
+      setImages(formattedImages);
+    });
+  }, []);
+
+  const getGridArea = (index) => {
+    const gridAreas = [
+      "1 / 1 / 3 / 2",
+      "1 / 2 / 3 / 3",
+      "1 / 3 / 3 / 5",
+      "1 / 5 / 3 / 6",
+      "3 / 1 / 5 / 2",
+      "3 / 2 / 5 / 4",
+      "3 / 4 / 5 / 6",
+    ];
+    return gridAreas[index % gridAreas.length];
+  };
 
   const imageVariants = {
     hidden: {
@@ -100,7 +86,7 @@ export default function Sektion3() {
         <div className="grid grid-cols-5 grid-rows-4 gap-0 w-full bg-black" style={{ height: "600px" }}>
           {images.map((image, index) => (
             <motion.div key={index} custom={index} initial="hidden" whileInView="visible" variants={imageVariants} viewport={{ once: false, amount: 0.3 }} className="relative overflow-hidden group bg-black cursor-pointer" style={{ gridArea: image.gridArea }} onClick={() => handleImageClick(image, index)}>
-              <Image src={image.src} alt={`Gallery image ${index + 1}`} fill className="object-cover" style={{ objectPosition: "center" }} />
+              <Image src={image.src} alt={`Gallery image ${index + 1}`} fill className="object-cover" unoptimized style={{ objectPosition: "center" }} />
 
               {/* Top border - appears on hover */}
               <div className="absolute top-0 left-0 w-full h-1 bg-[#FF2A70] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -137,7 +123,7 @@ export default function Sektion3() {
                 <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.8, opacity: 0 }} transition={{ duration: 0.3 }} className="relative max-w-2xl" onClick={(e) => e.stopPropagation()}>
                   {/* Image with triangle */}
                   <div className="relative">
-                    <Image src={selectedImage.src} alt={selectedImage.title} width={600} height={350} className="w-full h-auto object-cover" />
+                    <Image src={selectedImage.src} alt={selectedImage.title} width={600} height={350} className="w-full h-auto object-cover" unoptimized />
                     {/* Pink triangle bottom right */}
                     <div className="absolute right-0 bottom-0 w-0 h-0 border-b-60 border-b-[#FF2A70] border-l-60 border-l-transparent"></div>
                   </div>

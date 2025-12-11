@@ -28,7 +28,7 @@ const Testimonials = () => {
   if (!current) return null;
 
   // Byg den fulde URL til billedet
-  const imageUrl = current.assets?.url ? `http://localhost:4000${current.assets.url}` : "/assets/content-img/testimonial_2.jpg";
+  const imageUrl = current.asset?.url || "/assets/content-img/testimonial_2.jpg";
 
   return (
     <section className="bg-black py-20 relative overflow-hidden">
@@ -39,7 +39,7 @@ const Testimonials = () => {
 
       <div className="max-w-4xl mx-auto text-center relative z-10 px-6">
         {/* Profile Image */}
-        <Image src={imageUrl} alt={current.name || "Profile"} width={150} height={150} className="mx-auto rounded-lg mb-8" />
+        <Image src={imageUrl} alt={current.name || "Profile"} width={150} height={150} className="mx-auto rounded-lg mb-8" unoptimized />
 
         {/* Name */}
         <h3 className="text-white text-2xl font-bold mb-8 tracking-widest">{current.name?.toUpperCase()}</h3>
