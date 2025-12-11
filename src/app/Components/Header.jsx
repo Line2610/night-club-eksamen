@@ -26,10 +26,10 @@ const Header = () => {
         {/* Bottom border */}
         <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF2A70]"></div>
         {/* Triangles top - adjusted for mobile */}
-        <div className="absolute top-0 left-0 w-0 h-0 border-t-[60px] md:border-t-[80px] border-t-[#FF2A70] border-r-[60px] md:border-r-[80px] border-r-transparent"></div>
+        <div className="absolute top-0 left-0 w-0 h-0 border-t-60 md:border-t-80 border-t-[#FF2A70] border-r-60 md:border-r-80 border-r-transparent"></div>
 
         {/* Triangles bottom - adjusted for mobile */}
-        <div className="absolute right-0 w-0 h-0 border-b-[60px] md:border-b-[80px] border-b-[#FF2A70] border-l-[60px] md:border-l-[80px] border-l-transparent bottom-0"></div>
+        <div className="absolute right-0 w-0 h-0 border-b-60 md:border-b-80 border-b-[#FF2A70] border-l-60 md:border-l-80 border-l-transparent bottom-0"></div>
 
         <div className="max-w-7xl mx-auto flex justify-between items-center px-16 sm:px-20 md:px-6 relative z-10">
           {/* Logo - moved inward on mobile */}
