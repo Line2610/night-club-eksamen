@@ -171,9 +171,10 @@ export default function App() {
       </div>
 
       {/* Mobil: ét billede ad gangen, fuld bredde, knapper under billedet, alt centreret */}
-      <div className="flex flex-col items-center gap-4 md:hidden mt-8 w-full">
+      <div className="flex flex-col items-center gap-4 md:hidden mt-8 w-full h-70">
         <div
-          className="relative w-full aspect-2/1 cursor-pointer"
+          className="relative w-full max-w-[400px] mx-auto aspect-[2/1] cursor-pointer"
+          style={{ height: '200px' }}
           onClick={() => {
             if (!isPlaying) {
               setMobileOverlay(false);
@@ -189,16 +190,19 @@ export default function App() {
           <Image 
             src={currentTrack.image}
             alt={currentTrack.title}
-            fill
-            className="object-cover rounded"
+            width={400}
+            height={200}
+            sizes="(max-width: 600px) 100vw, 400px"
+            className="object-cover w-full h-full"
+            priority
           />
           {/* Pink triangles og play-overlay vises hvis overlay aktivt */}
           {mobileOverlay && (
             <>
               {/* Top left triangle */}
-              <div className="absolute top-0 left-0 w-0 h-0 border-l-16 border-l-[#FF2A70] border-b-16 border-b-transparent z-10" />
+              <div className="absolute top-0 left-0 w-0 h-0 border-l-50 border-l-[#FF2A70] border-b-50 border-b-transparent z-10" />
               {/* Bottom right triangle */}
-              <div className="absolute bottom-0 right-0 w-0 h-0 border-r-16 border-r-[#FF2A70] border-t-16 border-t-transparent z-10" />
+              <div className="absolute bottom-0 right-0 w-0 h-0 border-r-50 border-r-[#FF2A70] border-t-50 border-t-transparent z-10" />
               {/* Play button overlay */}
               <div className="absolute inset-0 flex items-center justify-center z-20">
                 <Image src="/assets/icon/Play_btn.svg" alt="Play Button" width={56} height={56} />
