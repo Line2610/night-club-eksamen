@@ -6,6 +6,7 @@ import Hero2 from '../Hero2';
 import TableGrid from './TableGrid';
 import BookingForm from './BookingForm';
 
+
 export default function BookTable() {
   const [selectedTable, setSelectedTable] = useState(null);
   const [reservations, setReservations] = useState([]);
@@ -18,6 +19,7 @@ export default function BookTable() {
     contact: '',
     comment: ''
   });
+
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');

@@ -124,7 +124,7 @@ export default function Sektion2() {
         {/* Navigation dots */}
         <div className="flex justify-center gap-2">
           {Array.from({ length: totalSlides }).map((_, index) => (
-            <button key={index} onClick={() => setCurrentSlide(index)} className={`w-8 h-2 md:w-10 md:h-3 transition-colors ${index === currentSlide ? "bg-[#FF2A70]" : "bg-white"}`} aria-label={`Go to slide ${index + 1}`} />
+            <button key={index} onClick={() => setCurrentSlide(index)} className={`w-3 h-3 transition-colors ${index === currentSlide ? "bg-[#FF2A70]" : "bg-white"}`} aria-label={`Go to slide ${index + 1}`} />
           ))}
         </div>
       </div>
