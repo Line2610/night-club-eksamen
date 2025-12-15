@@ -94,23 +94,36 @@ export default function Sektion3() {
           </div>
         </motion.div>
 
-        {/* Gallery Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-5 md:grid-rows-4 gap-0 w-full bg-black px-4 md:px-0" style={{ minHeight: "800px" }}>
+        {/* Gallery Grid - Desktop/Tablet only */}
+        <div className="hidden md:grid grid-cols-1 md:grid-cols-5 md:grid-rows-4 gap-0 w-full bg-black px-4 md:px-0" style={{ minHeight: "800px" }}>
           {images.map((image, index) => (
-            <motion.div key={index} custom={index} initial="hidden" whileInView="visible" variants={imageVariants} viewport={{ once: false, amount: 0.3 }} className="relative overflow-hidden group bg-black cursor-pointer h-64 md:h-auto" style={{ gridArea: isMobile ? 'auto' : image.gridArea }} onClick={() => handleImageClick(image, index)}>
+            <motion.div key={index} custom={index} initial="hidden" whileInView="visible" variants={imageVariants} viewport={{ once: false, amount: 0.3 }} className="relative overflow-hidden group bg-black cursor-pointer h-64 md:h-auto" style={{ gridArea: image.gridArea }} onClick={() => handleImageClick(image, index)}>
               <Image src={image.src} alt={`Gallery image ${index + 1}`} fill className="object-cover" unoptimized style={{ objectPosition: "center" }} />
-
               {/* Top border - appears on hover */}
               <div className="absolute top-0 left-0 w-full h-1 bg-[#FF2A70] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
               {/* Bottom border - appears on hover */}
               <div className="absolute bottom-0 left-0 w-full h-1 bg-[#FF2A70] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
               {/* Top-left triangle - appears on hover */}
               <div className="absolute top-0 left-0 w-0 h-0 border-t-60 border-t-[#FF2A70] border-r-60 border-r-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
               {/* Bottom-right triangle - appears on hover */}
               <div className="absolute bottom-0 right-0 w-0 h-0 border-b-60 border-b-[#FF2A70] border-l-60 border-l-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Mobile Gallery - single column, clickable, with framer-motion fade-in */}
+        <div className="md:hidden flex flex-col gap-0 w-full bg-black">
+          {images.map((image, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="relative w-full aspect-[2/1] h-auto cursor-pointer"
+              style={{ minHeight: '120px' }}
+              onClick={() => handleImageClick(image, index)}
+            >
+              <Image src={image.src} alt={`Gallery image ${index + 1}`} fill className="object-cover" unoptimized style={{ objectPosition: 'center' }} />
             </motion.div>
           ))}
         </div>
