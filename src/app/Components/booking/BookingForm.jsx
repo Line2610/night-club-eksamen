@@ -47,15 +47,15 @@ export default function BookingForm({ formData, errors, handleInputChange, handl
           </div>
           <div>
             <input
-              type="number"
+              type="text"
               name="guests"
               placeholder="Number of Guests"
               value={formData.guests}
               onChange={handleInputChange}
-              min="1"
-              max="20"
               required
               className={`bg-transparent border ${errors.guests ? 'border-red-500' : 'border-white'} text-white px-5 py-4 outline-none placeholder-white w-full`}
+              inputMode="numeric"
+              pattern="[0-9]*"
             />
             {errors.guests && <p className="text-red-500 text-sm mt-1">{errors.guests}</p>}
           </div>
@@ -63,15 +63,27 @@ export default function BookingForm({ formData, errors, handleInputChange, handl
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
-            <input
-              type="date"
+            <select
               name="date"
               value={formData.date}
               onChange={handleInputChange}
-              min={new Date().toISOString().split('T')[0]}
               required
-              className={`bg-transparent border ${errors.date ? 'border-red-500' : 'border-white'} text-white px-5 py-4 outline-none w-full`}
-            />
+              className={`bg-transparent border ${errors.date ? 'border-red-500' : 'border-white'} text-white px-5 py-4 outline-none w-full appearance-none`}
+              style={{ backgroundImage: 'url("data:image/svg+xml;utf8,<svg fill=\'white\' height=\'24\' viewBox=\'0 0 24 24\' width=\'24\' xmlns=\'http://www.w3.org/2000/svg\'><path d=\'M7 10l5 5 5-5z\'/></svg>")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center' }}
+            >
+              <option value="">Select Date</option>
+              {/* Viser de næste 14 dage som valgmuligheder */}
+              {Array.from({ length: 14 }).map((_, i) => {
+                const date = new Date();
+                date.setDate(date.getDate() + i);
+                const dateString = date.toISOString().split('T')[0];
+                return (
+                  <option key={dateString} value={dateString}>
+                    {dateString}
+                  </option>
+                );
+              })}
+            </select>
             {errors.date && <p className="text-red-500 text-sm mt-1">{errors.date}</p>}
           </div>
           <div>

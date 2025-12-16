@@ -1,14 +1,15 @@
 'use client';
-import { useState, useEffect } from 'react';
+
+import { useState } from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
 import Hero2 from '../Hero2';
 import TableGrid from './TableGrid';
 import BookingForm from './BookingForm';
 
-export default function BookTable() {
+
+export default function BookTable({ reservations }) {
   const [selectedTable, setSelectedTable] = useState(null);
-  const [reservations, setReservations] = useState([]);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -22,23 +23,7 @@ export default function BookTable() {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Hent reservationer når siden loader
-  useEffect(() => {
-    fetchReservations();
-  }, []);
-
-  const fetchReservations = async () => {
-    try {
-      const response = await fetch("http://localhost:4000/reservations");
-      if (response.ok) {
-        const data = await response.json();
-        // Gem alle reservationer med dato og bordnummer
-        setReservations(data.filter(res => res.table && res.date));
-      }
-    } catch (error) {
-      console.error("Error fetching reservations:", error);
-    }
-  };
+  // Reservationer kommer nu fra props
 
   // Tjek om et specifikt bord er booket på en specifik dato
   const isTableBookedOnDate = (tableNumber, date) => {
@@ -88,28 +73,28 @@ export default function BookTable() {
       newErrors.name = 'Name must be at least 2 characters';
     }
     
-    // Email validering
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Email validering (skal indeholde @ og slutte på .dk eller .com)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.(dk|com)$/i;
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
     } else if (!emailRegex.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
+      newErrors.email = 'Email must contain @ and end with .dk or .com';
     }
     
-    // Bordnummer validering
+    // Bordnummer 
     if (!formData.tableNumber) {
       newErrors.tableNumber = 'Please select a table';
     }
     
-    // Antal gæster validering
+    // Antal gæster 
     const guests = parseInt(formData.guests);
     if (!formData.guests) {
       newErrors.guests = 'Number of guests is required';
-    } else if (guests < 1 || guests > 20) {
-      newErrors.guests = 'Number of guests must be between 1 and 20';
+    } else if (guests < 1 || guests > 8) {
+      newErrors.guests = 'Number of guests must be between 1 and 8';
     }
     
-    // Dato validering
+    // Dato
     if (!formData.date) {
       newErrors.date = 'Date is required';
     } else {
@@ -127,12 +112,12 @@ export default function BookTable() {
       }
     }
     
-    // Telefon validering
-    const phoneRegex = /^[+]?[(]?[0-9]{1,4}[)]?[-\s.]?[(]?[0-9]{1,4}[)]?[-\s.]?[0-9]{1,9}$/;
+    // Telefon (kun tal tilladt)
+    const phoneRegex = /^\d+$/;
     if (!formData.contact.trim()) {
       newErrors.contact = 'Contact number is required';
     } else if (!phoneRegex.test(formData.contact.replace(/\s/g, ''))) {
-      newErrors.contact = 'Please enter a valid phone number';
+      newErrors.contact = 'Only numbers are allowed in phone number';
     }
     
     return newErrors;
@@ -186,7 +171,7 @@ export default function BookTable() {
         });
         setSelectedTable(null);
         setErrors({});
-        fetchReservations();
+        // fetchReservations fjernet, da data nu kommer fra server props
         setTimeout(() => setSuccessMessage(''), 5000);
       } else {
         const errorData = await response.json();
@@ -206,23 +191,6 @@ export default function BookTable() {
       <div className="min-h-screen bg-black text-white">
         <Hero2 title="Book Table" />
 
-        {/* Feedback Messages */}
-        {successMessage && (
-          <div className="max-w-6xl mx-auto px-5 mt-8">
-            <div className="bg-green-600 border border-green-500 text-white px-6 py-4 rounded">
-              ✓ {successMessage}
-            </div>
-          </div>
-        )}
-        
-        {errorMessage && (
-          <div className="max-w-6xl mx-auto px-5 mt-8">
-            <div className="bg-red-600 border border-red-500 text-white px-6 py-4 rounded">
-              ✗ {errorMessage}
-            </div>
-          </div>
-        )}
-
         <div className="max-w-6xl mx-auto px-5 py-16">
           <TableGrid 
             selectedTable={selectedTable}
@@ -230,6 +198,23 @@ export default function BookTable() {
             isTableBookedOnDate={isTableBookedOnDate}
             formData={formData}
           />
+
+        {/* Feedback besked */}
+        {successMessage && (
+          <div className="max-w-6xl mx-auto px-5 mt-8 mb-8">
+            <div className="bg-[#FF2A70] border border-[#FF2A70] text-white px-6 py-4">
+              ✓ {successMessage}
+            </div>
+          </div>
+        )}
+        
+        {errorMessage && (
+          <div className="max-w-6xl mx-auto px-5 mt-8 mb-8">
+            <div className="bg-gray-700 border border-gray-700 text-white px-6 py-4">
+              ✗ {errorMessage}
+            </div>
+          </div>
+        )}
 
           <BookingForm 
             formData={formData}
