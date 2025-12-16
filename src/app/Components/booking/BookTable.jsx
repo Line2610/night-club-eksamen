@@ -124,52 +124,35 @@ export default function BookTable({ reservations }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    e.preventDefault();
     setSuccessMessage('');
     setErrorMessage('');
-    
     // Validér formularen
     const newErrors = validateForm();
-    
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       setErrorMessage('Please correct the errors in the form');
       setTimeout(() => setErrorMessage(''), 4000);
       return;
     }
-    
-    const bookingData = {
-      name: formData.name,
-      email: formData.email,
-      table: parseInt(formData.tableNumber),
-      guests: parseInt(formData.guests),
-      date: formData.date,
-      phone: formData.contact,
-      comment: formData.comment
-    };
-
-    const response = await fetch("http://localhost:4000/reservations", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(bookingData),
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      setSuccessMessage(`Table ${formData.tableNumber} booked successfully for ${formData.date}!`);
-      setFormData({
-        name: '',
-        email: '',
-        tableNumber: '',
-        guests: '',
-        date: '',
-        contact: '',
-        comment: ''
+    try {
+      const bookingData = {
+        name: formData.name,
+        email: formData.email,
+        table: parseInt(formData.tableNumber),
+        guests: parseInt(formData.guests),
+        date: formData.date,
+        phone: formData.contact,
+        comment: formData.comment
+      };
+      const response = await fetch("http://localhost:4000/reservations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookingData),
       });
-
       if (response.ok) {
-        const result = await response.json();
         setSuccessMessage(`Table ${formData.tableNumber} booked successfully for ${formData.date}!`);
         setFormData({
           name: '',
@@ -182,7 +165,6 @@ export default function BookTable({ reservations }) {
         });
         setSelectedTable(null);
         setErrors({});
-        // fetchReservations fjernet, da data nu kommer fra server props
         setTimeout(() => setSuccessMessage(''), 5000);
       } else {
         const errorData = await response.json();
@@ -192,9 +174,10 @@ export default function BookTable({ reservations }) {
     } catch (error) {
       console.error("Error:", error);
       setErrorMessage("Error submitting booking. Please try again.");
-       setTimeout(() => setErrorMessage(''), 5000);
+      setTimeout(() => setErrorMessage(''), 5000);
     }
   };
+
 
   return (
     <>
