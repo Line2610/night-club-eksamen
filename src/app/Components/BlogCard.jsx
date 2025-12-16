@@ -37,7 +37,7 @@ const BlogCard = ({ post, index, isLast = false }) => {
                 <p className="text-gray-300 font-semibold text-sm mb-6 leading-relaxed">
                     {post.content?.substring(0, 300) + '...'}
                 </p>
-            <div className='flex justify-end'>
+            <div className='flex justify-center md:justify-center lg:justify-end'>
                 <div className="inline-block">
                     <div className="border-t border-white w-30 mb-2"></div>
                     

@@ -18,7 +18,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="bg-black to-pink-500 py-4 relative overflow-hidden">
+      <header className="bg-black to-pink-500 py-4 overflow-hidden sticky top-0 z-50">
         {/* Background overlay */}
         <div className="absolute inset-0 bg-black/30"></div>
         {/* Top border */}
