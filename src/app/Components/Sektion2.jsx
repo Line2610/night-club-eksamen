@@ -28,7 +28,7 @@ function EventCard({ event, index, isHovered, onHover }) {
   });
 
   return (
-    <div className="min-w-[50%] px-3" onMouseEnter={() => onHover(index)} onMouseLeave={() => onHover(null)}>
+    <div className="min-w-full md:min-w-[50%] px-3" onMouseEnter={() => onHover(index)} onMouseLeave={() => onHover(null)}>
       <div className="relative h-96">
         <Image src={event.asset.url} alt={event.title} fill className="object-cover" unoptimized />
 
@@ -65,6 +65,18 @@ export default function Sektion2() {
   const [events, setEvents] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     getEvents().then((data) => {
@@ -87,7 +99,8 @@ export default function Sektion2() {
     });
   }, []);
 
-  const totalSlides = Math.ceil(events.length / 2);
+  const eventsPerSlide = isMobile ? 1 : 2;
+  const totalSlides = Math.ceil(events.length / eventsPerSlide);
 
   return (
     <section className="relative py-16">
@@ -95,25 +108,59 @@ export default function Sektion2() {
       {/* Sort slør over baggrunden */}
       <div className="absolute inset-0 bg-black/75 -z-5"></div>
 
-      <h2 className="text-center text-3xl mb-2 text-white">EVENTS OF THE MONTH</h2>
-      <Image src="/assets/bottom_line2.png" alt="Underline" width={200} height={5} className="mx-auto mb-15" />
-
-      <div className="max-w-6xl mx-auto px-4">
-        {/* Carousel container */}
-        <div className="overflow-hidden mb-8">
-          <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
-            {events.map((event, index) => (
-              <EventCard key={event.id} event={event} index={index} isHovered={hoveredIndex === index} onHover={setHoveredIndex} />
+      {/* Desktop/Tablet layout (hidden on mobile) */}
+      <div className="hidden sm:block">
+        <h2 className="text-center text-3xl mb-2 text-white">EVENTS OF THE MONTH</h2>
+        <Image src="/assets/bottom_line2.png" alt="Underline" width={200} height={5} className="mx-auto mb-15" />
+        <div className="max-w-6xl mx-auto px-4">
+          {/* Carousel container */}
+          <div className="overflow-hidden mb-8">
+            <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
+              {events.map((event, index) => (
+                <EventCard key={event.id} event={event} index={index} isHovered={hoveredIndex === index} onHover={setHoveredIndex} />
+              ))}
+            </div>
+          </div>
+          {/* Navigation dots */}
+          <div className="flex justify-center gap-2">
+            {Array.from({ length: totalSlides }).map((_, index) => (
+              <button key={index} onClick={() => setCurrentSlide(index)} className={`w-3 h-3 transition-colors ${index === currentSlide ? "bg-[#FF2A70]" : "bg-white"}`} aria-label={`Go to slide ${index + 1}`} />
             ))}
           </div>
         </div>
+      </div>
 
-        {/* Navigation dots */}
-        <div className="flex justify-center gap-2">
-          {Array.from({ length: totalSlides }).map((_, index) => (
-            <button key={index} onClick={() => setCurrentSlide(index)} className={`w-3 h-3 transition-colors ${index === currentSlide ? "bg-[#FF2A70]" : "bg-white"}`} aria-label={`Go to slide ${index + 1}`} />
-          ))}
+      {/* Mobile layout*/}
+      <div className="sm:hidden">
+        <h2 className="text-center text-2xl mb-2 text-white font-bold tracking-wide">EVENTS OF THE MONTH</h2>
+        <div className="flex justify-center mb-4">
+          <div className="w-24 h-1 bg-[#FF2A70] rounded-full" />
         </div>
+        {events.length > 0 && (
+          <div className="flex flex-col items-center">
+            <div className="w-full max-w-md overflow-hidden shadow-lg bg-black/80">
+              <div className="relative w-full h-75">
+                <Image src={events[currentSlide].asset.url} alt={events[currentSlide].title} fill className="object-cover" unoptimized />
+              </div>
+              <div className="flex w-full bg-[#FF2A70] text-white text-s font-semibold">
+                <div className="flex-1 py-2 text-center">{new Date(events[currentSlide].date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })}</div>
+                <div className="flex-1 py-2 text-center">{new Date(events[currentSlide].date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })}</div>
+                <div className="flex-2 py-2 text-center">{events[currentSlide].location}</div>
+              </div>
+            </div>
+            {/* Navigation dots */}
+            <div className="flex justify-center gap-3 mt-6 mb-2">
+              {Array.from({ length: totalSlides }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`w-4 h-4 ${index === currentSlide ? 'bg-[#FF2A70]' : 'bg-white'} flex items-center justify-center`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -7,7 +7,6 @@ import Hero2 from '../Hero2';
 import TableGrid from './TableGrid';
 import BookingForm from './BookingForm';
 
-
 export default function BookTable({ reservations }) {
   const [selectedTable, setSelectedTable] = useState(null);
   const [formData, setFormData] = useState({
@@ -19,11 +18,11 @@ export default function BookTable({ reservations }) {
     contact: '',
     comment: ''
   });
+
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Reservationer kommer nu fra props
 
   // Tjek om et specifikt bord er booket på en specifik dato
   const isTableBookedOnDate = (tableNumber, date) => {
@@ -148,13 +147,25 @@ export default function BookTable({ reservations }) {
       comment: formData.comment
     };
 
-    try {
-      const response = await fetch("http://localhost:4000/reservations", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(bookingData),
+    const response = await fetch("http://localhost:4000/reservations", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(bookingData),
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      setSuccessMessage(`Table ${formData.tableNumber} booked successfully for ${formData.date}!`);
+      setFormData({
+        name: '',
+        email: '',
+        tableNumber: '',
+        guests: '',
+        date: '',
+        contact: '',
+        comment: ''
       });
 
       if (response.ok) {
@@ -181,7 +192,7 @@ export default function BookTable({ reservations }) {
     } catch (error) {
       console.error("Error:", error);
       setErrorMessage("Error submitting booking. Please try again.");
-      setTimeout(() => setErrorMessage(''), 5000);
+       setTimeout(() => setErrorMessage(''), 5000);
     }
   };
 
