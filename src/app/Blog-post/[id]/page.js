@@ -174,7 +174,7 @@ async function FetchBlogPost({ params }) {
                                 placeholder="Your Comment"
                                 rows="6"
                                 required
-                                className="w-full bg-transparent border border-gray-600 text-white px-4 py-3 focus:border-[#FF2A70] focus:outline-none resize-none"
+                                className="w-full bg-transparent border border-gray-600 text-white px-4 py-3 focus:border-[#FF2A70] focus:outline-none resize-y min-h-[150px] max-h-[300px]"
                             ></textarea>
                             
                             <div className="flex justify-end">

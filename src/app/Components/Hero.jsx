@@ -62,7 +62,7 @@ const Hero = () => {
         </h2>
       </div>
 
-      {/* Bottom line med fade-in - Responsiv størrelse og placering */}
+      {/* Bottom line med fade-in - NU MED WIDTH OG HEIGHT */}
       <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 z-10 px-4 transition-all duration-800 delay-500 ${showTagline ? "opacity-100 translate-y-10 sm:translate-y-12 md:translate-y-14 lg:translate-y-16 xl:translate-y-18 2xl:translate-y-40" : "opacity-0"}`}>
         <Image 
           src="/assets/bottom_line.png" 
@@ -73,18 +73,21 @@ const Hero = () => {
         />
       </div>
 
-      {/* Background images */}
+      {/* Background images - NU MED WIDTH OG HEIGHT */}
       <Image 
         src={backgroundImage} 
-        fill={true} 
+        width={1920}
+        height={1080}
         alt="Header Background" 
-        className="object-cover object-center z-0" 
+        className="absolute inset-0 w-full h-full object-cover object-center z-0" 
         priority 
       />
       <Image 
         src="/assets/bg/header_bg_1.png" 
-        fill={true} 
-        className="object-cover object-center z-5 opacity-50" 
+        width={1920}
+        height={1080}
+        alt="Header Background Overlay"
+        className="absolute inset-0 w-full h-full object-cover object-center z-5 opacity-50" 
       />
     </div>
   );
