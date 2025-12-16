@@ -13,10 +13,10 @@ import LastestVideo from "./Components/LatestVideo";
 const Home = () => {
   return (
     <>
-      <header>
+        
         <Hero />
         <Header />
-      </header>
+        <main>
       <Sektion1 />
       <Sektion2 />
       <Sektion3 />
@@ -25,6 +25,7 @@ const Home = () => {
       <Testimonials />
       <RecentBlog />
       <Newsletter />
+      </main>
       <Footer />
     </>
   );

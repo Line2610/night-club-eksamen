@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import BlogCard from "./BlogCard";
 
 const BlogList = () => {
@@ -9,23 +9,25 @@ const BlogList = () => {
   const [loading, setLoading] = useState(true);
   const postsPerPage = 3;
 
-  // Fetch data med useEffect (Client Component pattern)
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await fetch('http://localhost:4000/blogposts');
-        const data = await response.json();
-        const validPosts = data.filter(post => post && post.title && post.content);
-        setPosts(validPosts);
-      } catch (error) {
-        console.error('Error fetching posts:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // Async function til at fetche data
+  const fetchPosts = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('http://localhost:4000/blogposts');
+      const data = await response.json();
+      const validPosts = data.filter(post => post && post.title && post.content);
+      setPosts(validPosts);
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  // Kald async function når komponenten mounter
+  useState(() => {
     fetchPosts();
-  }, []);
+  });
 
   // Pagination logic
   const indexOfLastPost = currentPage * postsPerPage;
@@ -45,30 +47,33 @@ const BlogList = () => {
         ))}
       </div>
 
-      {/* Simple Pagination */}
+      {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex justify-center items-center space-x-4 mt-12">
-          <button
-            onClick={() => setCurrentPage(currentPage - 1)}
-            disabled={currentPage === 1}
-            className={`px-6 py-3 border text-sm uppercase font-bold ${
-              currentPage === 1 ? 'border-gray-600 text-gray-600' : 'border-white text-white hover:border-[#FF2A70] hover:text-[#FF2A70]'
-            }`}
-          >
-            Previous
-          </button>
+        <div className="flex justify-center items-center space-x-2 mt-12">
+          {/* Side numre */}
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNumber) => (
+            <button
+              key={pageNumber}
+              onClick={() => setCurrentPage(pageNumber)}
+              className={`text-base cursor-pointer ${
+                currentPage === pageNumber
+                  ? 'text-white border-b-2 border-white'
+                  : 'text-gray-600 hover:text-white'
+              }`}
+            >
+              {pageNumber}
+            </button>
+          ))}
           
-          <span className="text-white">Page {currentPage} of {totalPages}</span>
-          
-          <button
-            onClick={() => setCurrentPage(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className={`px-6 py-3 border text-sm uppercase font-bold ${
-              currentPage === totalPages ? 'border-gray-600 text-gray-600' : 'border-white text-white hover:border-[#FF2A70] hover:text-[#FF2A70]'
-            }`}
-          >
-            Next
-          </button>
+          {/* næste > knap */}
+          {currentPage < totalPages && (
+            <button
+              onClick={() => setCurrentPage(currentPage + 1)}
+              className="text-base cursor-pointer text-gray-600 hover:text-white"
+            >
+              Next &gt;
+            </button>
+          )}
         </div>
       )}
     </div>
