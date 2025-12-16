@@ -95,7 +95,7 @@ export default function Sektion3() {
         </motion.div>
 
         {/* Gallery Grid - Desktop/Tablet only */}
-        <div className="hidden md:grid grid-cols-1 md:grid-cols-5 md:grid-rows-4 gap-0 w-full bg-black px-4 md:px-0" style={{ minHeight: "800px" }}>
+        <div className="hidden md:grid grid-cols-1 md:grid-cols-5 md:grid-rows-4 gap-0 w-full bg-black px-4 md:px-0" style={{ minHeight: "500px" }}>
           {images.map((image, index) => (
             <motion.div key={index} custom={index} initial="hidden" whileInView="visible" variants={imageVariants} viewport={{ once: false, amount: 0.3 }} className="relative overflow-hidden group bg-black cursor-pointer h-64 md:h-auto" style={{ gridArea: image.gridArea }} onClick={() => handleImageClick(image, index)}>
               <Image src={image.src} alt={`Gallery image ${index + 1}`} fill className="object-cover" unoptimized style={{ objectPosition: "center" }} />
@@ -119,7 +119,7 @@ export default function Sektion3() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="relative w-full aspect-[2/1] h-auto cursor-pointer"
+              className="relative w-full aspect-2/1 h-auto cursor-pointer"
               style={{ minHeight: '120px' }}
               onClick={() => handleImageClick(image, index)}
             >
