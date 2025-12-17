@@ -20,7 +20,13 @@ export default function EventCard({ event, index, isHovered, onHover }) {
   });
 
   return (
-    <div className="min-w-full md:min-w-[50%] px-3" onMouseEnter={() => onHover(index)} onMouseLeave={() => onHover(null)}>
+<div
+  className="min-w-full md:min-w-[50%] px-3"
+  onMouseEnter={() => onHover(index)}
+  onMouseLeave={() => onHover(null)}
+  onClick={() => onHover(isHovered ? null : index)}
+>
+
       <div className="relative h-96">
         <Image src={event.asset.url} alt={event.title} fill className="object-cover" unoptimized />
 
