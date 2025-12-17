@@ -80,7 +80,7 @@ export default function App() {
   return (
     <div className="bg-black py-12">
       <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-white text-2xl text-center tracking-widest mb-20">
+        <h2 className="text-white text-3xl text-center tracking-widest mb-10">
           NIGHT CLUB TRACK
                   <Image src="/assets/bottom_line2.png" width={400} height={50} alt="decorative line" className="mx-auto block" />
         </h2>
@@ -116,7 +116,7 @@ export default function App() {
           </div>
         </div>
 
-      {/* Bottom row: Gallery images - desktop (vandret scroll) */}
+      {/* Bottom row*/}
       <div className="hidden md:flex items-center gap-5">
         <button 
           onClick={scrollLeft}
@@ -140,14 +140,14 @@ export default function App() {
                 height={240}
                 className="w-55 h-55 object-cover transition-transform duration-300 group-hover:scale-105"
               />
-              {/* Pink triangles on hover */}
+              {/* Pink trekanter på hover */}
               {hoveredTrack === track.id && (
                 <>
-                  {/* Top left triangle */}
+                  {/* øverst venstre */}
                   <div className="absolute top-0 left-0 w-0 h-0 border-l-60 border-l-[#FF2A70] border-b-60 border-b-transparent"></div>
-                  {/* Bottom right triangle */}
+                  {/* nederst højre */}
                   <div className="absolute bottom-0 right-0 w-0 h-0 border-r-60 border-r-[#FF2A70] border-t-60 border-t-transparent"></div>
-                  {/* Play button overlay */}
+                  {/* Play button */}
                   <div className="absolute inset-0 flex items-center justify-center z-10">
                     <Image src="/assets/icon/Play_btn.svg" alt="Play Button" width={80} height={80} className="w-20 h-20" />
                   </div>
@@ -170,10 +170,10 @@ export default function App() {
         </button>
       </div>
 
-      {/* Mobil: ét billede ad gangen, fuld bredde, knapper under billedet, alt centreret */}
+      {/* Mobil*/}
       <div className="flex flex-col items-center gap-4 md:hidden mt-8 w-full h-70">
         <div
-          className="relative w-full max-w-[400px] mx-auto aspect-[2/1] cursor-pointer"
+          className="relative w-full max-w-[400px] mx-auto aspect-2/1 cursor-pointer"
           style={{ height: '200px' }}
           onClick={() => {
             if (!isPlaying) {
@@ -196,14 +196,14 @@ export default function App() {
             className="object-cover w-full h-full"
             priority
           />
-          {/* Pink triangles og play-overlay vises hvis overlay aktivt */}
+          {/* Pink triangles og play-overlay */}
           {mobileOverlay && (
             <>
               {/* Top left triangle */}
               <div className="absolute top-0 left-0 w-0 h-0 border-l-60 border-l-[#FF2A70] border-b-60 border-b-transparent z-10" />
               {/* Bottom right triangle */}
               <div className="absolute bottom-0 right-0 w-0 h-0 border-r-60 border-r-[#FF2A70] border-t-60 border-t-transparent z-10" />
-              {/* Play button overlay */}
+              {/* Play button */}
               <div className="absolute inset-0 flex items-center justify-center z-20">
                 <Image src="/assets/icon/Play_btn.svg" alt="Play Button" width={56} height={56} />
               </div>
