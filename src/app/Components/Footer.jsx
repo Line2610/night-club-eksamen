@@ -7,7 +7,7 @@ export default function Footer() {
       {/* Background image */}
       <Image src="/assets/bg/footerbg.jpg" alt="Footer Background" fill className="object-cover opacity-10" style={{ zIndex: 0 }} />
 
-      {/* Desktop/Tablet Layout (hidden on mobile) */}
+      {/* Desktop/Tablet Layout (hidden på mobil) */}
       <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto hidden sm:grid">
         {/* Column 1: Logo + Location + Opening Hours */}
         <div>
