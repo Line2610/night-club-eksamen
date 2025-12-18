@@ -38,7 +38,7 @@ const Hero = () => {
     return (
       <div className="relative w-full h-screen bg-black flex items-center justify-center">
         <div className="animate-pulse">
-          <Image src="/assets/loader/madbars.gif" width={40} height={40} alt="Loading" style={{ width: "auto", height: "auto" }} />
+          <Image src="/assets/loader/madbars.gif" width={40} height={40} alt="Loading" />
         </div>
       </div>
     );
