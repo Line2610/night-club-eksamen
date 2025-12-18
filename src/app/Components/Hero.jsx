@@ -1,68 +1,231 @@
-"use client";
+import Header from "../../Components/Header";
+import Footer from "../../Components/Footer";
+import Hero2 from "../../Components/Hero2";
 import Image from "next/image";
-import { useState, useRef } from "react";
+import { Suspense } from "react";
+import { redirect, revalidatePath } from "next/navigation";
 
-const Hero = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [showLogo, setShowLogo] = useState(false);
-  const [showTagline, setShowTagline] = useState(false);
-  const hasStartedAnimation = useRef(false);
-  const backgroundImageRef = useRef(null);
-
-  const backgroundImages = ["/assets/bg/header_bg_1.jpg", "/assets/bg/header_bg_2.jpg"];
-
-  // Vælg tilfældigt baggrundsbillede
-  if (backgroundImageRef.current === null) {
-    backgroundImageRef.current = backgroundImages[Math.floor(Math.random() * backgroundImages.length)];
-  }
-
-  // Start loading animation og efterfølgende logo og tagline animationer
-  if (isLoading && !hasStartedAnimation.current) {
-    hasStartedAnimation.current = true;
-
-    // Loading animation med timer
-    setTimeout(() => {
-      setIsLoading(false);
-      // Start logo animation
-      setTimeout(() => {
-        setShowLogo(true);
-        // Start tagline animation efter logo
-        setTimeout(() => {
-          setShowTagline(true);
-        }, 800);
-      }, 200);
-    }, 2000);
-  }
-
-  if (isLoading) {
+// Hoved side komponent for individuel blog post - modtager params fra URL
+const BlogPostPage = ({ params }) => {
     return (
-      <div className="relative w-full h-screen bg-black flex items-center justify-center">
-        <div className="animate-pulse">
-          <Image src="/assets/loader/madbars.gif" width={40} height={40} alt="Loading" />
-        </div>
-      </div>
+        <>
+            {/* Header navigation */}
+            <Header />
+            
+            {/* Hoved indhold med sort baggrund */}
+            <main className='bg-black'>
+                {/* Hero sektion med side titel */}
+                <Hero2 title="Blog post" />
+                
+                {/* Suspense wrapper til async data loading med fallback */}
+                <Suspense fallback={<div className="text-white text-center py-8">Loading...</div>}>
+                    <FetchBlogPost params={params} />
+                </Suspense>
+            </main>
+            
+            {/* Footer sektion */}
+            <Footer />
+        </>
     );
-  }
-
-  return (
-    <div className="relative w-full h-screen overflow-hidden">
-      {/* Logo med fold-in animation  */}
-      <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 transition-all duration-1000 ${showLogo ? "opacity-100 scale-100" : "opacity-0 scale-0"}`}>
-        <Image src="/assets/icon/Logo.svg" width={400} height={200} alt="Logo" className="w-64 h-auto sm:w-80 md:w-96 lg:w-[500px] xl:w-[600px] 2xl:w-[800px] transform transition-transform duration-1000" />
-      </div>
-
-      {/* Tagline med animation */}
-      <h2 className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 mt-3 sm:mt-8 md:mt-10 lg:mt-12 xl:mt-14 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl z-10 uppercase text-white text-center transition-all duration-800 px-4 tracking-wide sm:tracking-wider md:tracking-widest lg:tracking-[0.8rem] xl:tracking-[1.0rem] 2xl:tracking-[1.3rem] ${showTagline ? "opacity-100 translate-y-1/2" : "opacity-0 -translate-y-full"}`}>Have a good time</h2>
-
-      {/* Bottom line med fade-in */}
-      <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 mt-9 sm:mt-14 md:mt-16 lg:mt-18 xl:mt-20 2xl:mt-24 z-10 transition-all duration-800 delay-500 ${showTagline ? "opacity-100" : "opacity-0"}`}>
-        <Image src="/assets/bottom_line.png" width={300} height={30} alt="Bottom Line" className="w-48 h-auto sm:w-60 md:w-80 lg:w-96 xl:w-[500px] 2xl:w-[600px]" />
-      </div>
-
-      {/* Baggrundsbillede */}
-      <Image src={backgroundImageRef.current} fill={true} alt="Header Background" className="object-cover z-0" priority />
-    </div>
-  );
 };
 
-export default Hero;
+// Server Action til at tilføje ny kommentar til blog post
+async function addComment(formData) {
+    'use server'; // Markerer som server-side funktion
+    
+    // Henter form data fra submitted form
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const comment = formData.get('comment');
+    const blogpostId = formData.get('blogpostId');
+
+    try {
+        // POST request til API for at oprette ny kommentar
+        const response = await fetch('http://localhost:4000/comments', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                blogpostId: parseInt(blogpostId), // Konverterer til heltal
+                name: name,
+                email: email,
+                comment: comment,
+                date: new Date().toISOString() // Nuværende dato som ISO string
+            })
+        });
+
+        if (response.ok) {
+            // Invaliderer cache for denne specifikke side
+            revalidatePath(`/Blog-post/${blogpostId}`);
+            // Redirecter til samme side for at vise den nye kommentar
+            redirect(`/Blog-post/${blogpostId}`);
+        }
+    } catch (error) {
+        // Logger fejl hvis API kald fejler
+        console.error('Error adding comment:', error);
+    }
+}
+
+// Server komponent til at hente blog post og kommentarer - INGEN useEffect nødvendig
+async function FetchBlogPost({ params }) {
+    // Afventer params da de kommer fra URL routing
+    const resolvedParams = await params;
+    const { id } = resolvedParams;
+    
+    try {
+        // Parallel fetch af blog post og kommentarer for bedre performance
+        const [blogResponse, commentsResponse] = await Promise.all([
+            fetch(`http://localhost:4000/blogposts/${id}`, { cache: 'no-store' }), // Henter specifik blog post
+            fetch(`http://localhost:4000/comments?blogpostId=${id}`, { cache: 'no-store' }) // Henter kommentarer for dette post
+        ]);
+        
+        // Parser JSON data fra begge API kald
+        const blogPost = await blogResponse.json();
+        const initialComments = await commentsResponse.json();
+
+        // Hjælpe funktion til at afkorte lange tekster
+        const truncateText = (text, maxLength = 1500) => {
+            if (!text) return '';
+            return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+        }; 
+
+        // Hjælpe funktion til at opdele tekst i paragraffer
+        const splitIntoParagraphs = (text) => {
+            if (!text) return [];
+            const truncated = truncateText(text, 1500);
+            return truncated.split('\n').filter(p => p.trim().length > 0); // Filtrerer tomme linjer
+        };
+
+        return (
+            // Hoved container med responsiv bredde og centrering
+            <div className="max-w-4xl mx-auto px-4 py-8">
+                
+                {/* Blog Post Header sektion */}
+                <div className="mb-8">
+                    {/* Responsivt hero billede */}
+                    <div className="relative w-full h-96 mb-6 mt-4">
+                         <Image
+                            src={blogPost.asset?.url}
+                            alt={blogPost.title}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 800px"
+                            className="object-cover"
+                            unoptimized
+                        />
+                    </div>
+                    
+                    {/* Blog post titel */}
+                    <h1 className="text-white text-3xl md:text-4xl font-bold mb-4">
+                        {blogPost.title}
+                    </h1>
+
+                    {/* Metadata: forfatter, kommentar antal og dato */}
+                    <div className="text-[#FF2A70] text-sm font-semibold mb-2">
+                       / By: {blogPost.author} / {initialComments.length} comments / {new Date(blogPost.date || Date.now()).toLocaleDateString('en-US', {
+                            day: 'numeric',
+                            month: 'short', 
+                            year: 'numeric'
+                        })}
+                    </div>
+                </div>
+
+                {/* Blog indhold sektion */}
+                <div className="text-gray-300 space-y-4 mb-12">
+                    {/* Mapper gennem paragraffer og renderer hver som separate <p> elementer */}
+                    {splitIntoParagraphs(blogPost.content || blogPost.description).map((paragraph, index) => (
+                        <p key={index}>{paragraph}</p>
+                    ))}
+                </div>
+
+                {/* Kommentarer sektion */}
+                <div className="border-t border-gray-800 pt-8">
+                    {/* Kommentar overskrift med antal */}
+                    <h2 className="text-white text-2xl font-bold mb-8 uppercase">
+                        {initialComments.length} Comments
+                    </h2>
+
+                    {/* Viser eksisterende kommentarer */}
+                    <div className="space-y-8 mb-12">
+                        {initialComments.map((comment) => (
+                            <div key={comment.id}>
+                                {/* Kommentar header med navn og dato */}
+                                <div className="mb-3">
+                                    <span className="text-white font-bold text-lg">{comment.name}</span>
+                                    <span className="text-[#FF2A70] text-sm ml-2">
+                                        - Posted {new Date(comment.date).toLocaleDateString('en-US', {
+                                            day: 'numeric',
+                                            month: 'short',
+                                            year: 'numeric'
+                                        })}
+                                    </span>
+                                </div>
+                                {/* Kommentar indhold */}
+                                <p className="text-gray-300 leading-relaxed mb-8">
+                                    {comment.comment}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* "Skriv kommentar" sektion med interaktiv form */}
+                    <div>
+                        {/* Form overskrift */}
+                        <h3 className="text-white text-xl font-bold mb-6 uppercase">
+                            Leave a Comment
+                        </h3>
+                        
+                        {/* Kommentar form der bruger Server Action */}
+                        <form action={addComment} className="space-y-4">
+                            {/* Skjult felt med blog post ID */}
+                            <input type="hidden" name="blogpostId" value={id} />
+                            
+                            {/* Navn og email felter i grid layout */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <input
+                                    type="text"
+                                    name="name"
+                                    placeholder="Your Name"
+                                    required
+                                    className="bg-transparent border border-gray-600 text-white px-4 py-3 focus:border-[#FF2A70] focus:outline-none"
+                                />
+                                <input
+                                    type="email"
+                                    name="email"
+                                    placeholder="Your Email"
+                                    required
+                                    className="bg-transparent border border-gray-600 text-white px-4 py-3 focus:border-[#FF2A70] focus:outline-none"
+                                />
+                            </div>
+                            
+                            {/* Kommentar textarea med begrænsning på højde */}
+                            <textarea
+                                name="comment"
+                                placeholder="Your Comment"
+                                rows="6"
+                                required
+                                className="w-full bg-transparent border border-gray-600 text-white px-4 py-3 focus:border-[#FF2A70] focus:outline-none resize-y min-h-[150px] max-h-[300px]"
+                            ></textarea>
+                            
+                            {/* Submit knap i højre hjørne */}
+                            <div className="flex justify-end">
+                                <button
+                                    type="submit"
+                                    className="bg-transparent border-t border-b border-white px-8 py-2 text-white font-bold uppercase hover:text-[#FF2A70] hover:border-[#FF2A70] transition-colors"
+                                >
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        );
+    } catch (error) {
+        // Error handling hvis data ikke kan hentes
+        console.error('Error fetching blog post:', error);
+        return <div className="text-white text-center py-8">Error loading blog post</div>;
+    }
+}
+
+export default BlogPostPage;
