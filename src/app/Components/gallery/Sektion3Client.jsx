@@ -72,7 +72,11 @@ export default function Sektion3Client({ images }) {
                 <button
                   type="button"
                   className="w-full h-full"
-                  onClick={() => setActiveMobileIndex(isActive ? null : index)}
+                  onClick={() => {
+                    setActiveMobileIndex(isActive ? null : index);
+                    setSelectedImage(image);
+                    setSelectedIndex(index);
+                  }}
                   onMouseLeave={() => setActiveMobileIndex(null)}
                 >
                   <Image
