@@ -113,25 +113,25 @@ const Header = () => {
               <ul className="space-y-8 text-white text-2xl font-medium">
                 {/* Home link - lukker menu når der klikkes */}
                 <li>
-                  <a href="/" className={`block hover:text-pink-400 transition-colors ${isActive("/") ? "text-pink-500" : ""}`} onClick={toggleMenu}>
+                  <a href="/" className={`block hover:text-[#FF2A70] transition-colors ${isActive("/") ? "text-[#FF2A70]" : ""}`} onClick={toggleMenu}>
                     HOME
                   </a>
                 </li>
                 {/* Blog link */}
                 <li>
-                  <a href="/Blog" className={`block hover:text-pink-500 transition-colors ${isActive("/Blog") ? "text-pink-500" : ""}`} onClick={toggleMenu}>
+                  <a href="/Blog" className={`block hover:text-[#FF2A70] transition-colors ${isActive("/Blog") ? "text-[#FF2A70]" : ""}`} onClick={toggleMenu}>
                     BLOG
                   </a>
                 </li>
                 {/* Book table link */}
                 <li>
-                  <a href="/Book-table" className={`block hover:text-pink-500 transition-colors ${isActive("/Book-table") ? "text-pink-500" : ""}`} onClick={toggleMenu}>
+                  <a href="/Book-table" className={`block hover:text-[#FF2A70] transition-colors ${isActive("/Book-table") ? "text-[#FF2A70]" : ""}`} onClick={toggleMenu}>
                     BOOK TABLE
                   </a>
                 </li>
                 {/* Contact us link */}
                 <li>
-                  <a href="/Contact-us" className={`block hover:text-pink-500 transition-colors ${isActive("/Contact-us") ? "text-pink-500" : ""}`} onClick={toggleMenu}>
+                  <a href="/Contact-us" className={`block hover:text-[#FF2A70] transition-colors ${isActive("/Contact-us") ? "text-[#FF2A70]" : ""}`} onClick={toggleMenu}>
                     CONTACT US
                   </a>
                 </li>

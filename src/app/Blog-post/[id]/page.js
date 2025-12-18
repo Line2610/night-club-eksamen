@@ -12,9 +12,6 @@ const BlogPostPage = ({ params }) => {
             <Header />
             
             <main className='bg-black'>
-
-                <Hero2 title="Blog post" />
-                
                 {/* Suspense wrapper til async data loading med fallback */}
                 <Hero2 title="Blog post" />           
                 <Suspense fallback={<div className="text-white text-center py-8">Loading...</div>}>
