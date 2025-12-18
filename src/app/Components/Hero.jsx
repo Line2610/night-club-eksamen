@@ -1,6 +1,6 @@
-import Header from "../../Components/Header";
-import Footer from "../../Components/Footer";
-import Hero2 from "../../Components/Hero2";
+import Header from "../Components/Header";
+import Footer from "../Components/Footer";
+import Hero2 from "../Components/Hero2";
 import Image from "next/image";
 import { Suspense } from "react";
 import { redirect, revalidatePath } from "next/navigation";
