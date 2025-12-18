@@ -17,6 +17,16 @@ const Testimonials = () => {
     // Fetch testimonials data fra API
     fetch("http://localhost:4000/testimonials")
       .then((res) => res.json())
+      .then((data) => {
+        console.log("Testimonials data:", data); // Debug log for at se data struktur
+        setTestimonials(data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.error("Fejl ved hentning af testimonials:", err);
+        setIsLoading(false);
+      });
+  }
       .then((data) => setTestimonials(data))
       .catch((err) => console.error("Fejl ved hentning af testimonials:", err));
   }, []); // Tom dependency array - kører kun én gang
@@ -29,6 +39,14 @@ const Testimonials = () => {
       </section>
     );
   }
+  // Vis besked hvis ingen testimonials er tilgængelige
+  if (!testimonials.length) {
+    return (
+      <section className="bg-black py-20 flex items-center justify-center">
+        <div className="text-white text-xl">No testimonials available</div>
+      </section>
+    );
+  }
 
   // Henter det nuværende aktive testimonial fra arrayet
   const current = testimonials[activeTestimonial];
@@ -36,8 +54,11 @@ const Testimonials = () => {
   // Hvis der ikke er noget aktivt testimonial, returner ingenting
   if (!current) return null;
 
-  // Byg den fulde URL til billedet eller brug fallback billede
-  const imageUrl = current.assets?.url ? `http://localhost:4000${current.assets.url}` : "/assets/content-img/testimonial_2.jpg";
+  // Henter billede URL fra testimonial data med fallback til default billede
+  // current.asset?.url - API billede (hvis det eksisterer)
+  // || - fallback operator
+  // "/assets/content-img/testimonial_2.jpg" - standard billede hvis API billede mangler
+  const imageUrl = current.asset?.url || "/assets/content-img/testimonial_2.jpg";
 
   return (
     // Hoved sektion med sort baggrund og relativ positionering
@@ -50,6 +71,16 @@ const Testimonials = () => {
 
       {/* Indhold container med maksimal bredde og centreret layout */}
       <div className="max-w-4xl mx-auto text-center relative z-10 px-6">
+        {/* Profilbillede med key prop for at tvinge re-render */}
+        <Image 
+          key={activeTestimonial} // Vigtig: tvinger billedet til at re-render
+          src={imageUrl} 
+          alt={current.name || "Profile"} 
+          width={150} 
+          height={150} 
+          className="mx-auto rounded-lg mb-8" 
+          unoptimized 
+        />
         
         {/* Profilbillede af personen der giver testimonial */}
         <Image src={imageUrl} alt={current.name || "Profile"} width={150} height={150} className="mx-auto rounded-lg mb-8" />
@@ -82,6 +113,11 @@ const Testimonials = () => {
             // Hver prik er en knap der skifter til det testimonial
             <button 
               key={index} 
+              onClick={() => {
+                console.log("Switching to testimonial:", index); // Debug log
+                setActiveTestimonial(index);
+              }} 
+              className={`w-3 h-3 cursor-pointer ${activeTestimonial === index ? "bg-[#FF2A70]" : "bg-white"}`} 
               onClick={() => setActiveTestimonial(index)} 
               className={`w-3 h-3 cursor-pointer ${
                 activeTestimonial === index ? "bg-[#FF2A70]" : "bg-white" // Aktiv prik er pink, andre er hvide
