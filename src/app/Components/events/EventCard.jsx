@@ -21,16 +21,16 @@ export default function EventCard({ event, index, isHovered, onHover }) {
 
   return (
 <div
-  className="min-w-full md:min-w-[50%] px-3"
+  className="min-w-full md:min-w-[50%] px-3 cursor-pointer"
   onMouseEnter={() => onHover(index)}
   onMouseLeave={() => onHover(null)}
   onClick={() => onHover(isHovered ? null : index)}
 >
 
       <div className="relative h-96">
-        <Image src={event.asset.url} alt={event.title} fill className="object-cover" unoptimized />
+        <Image src={event.asset.url} alt={event.title} fill className="object-cover cursor-pointer" unoptimized />
 
-        <animated.div style={overlayAnimation} className="absolute inset-0 flex flex-col items-center justify-end border-t-2 border-[#FF2A70]/50 pointer-events-none">
+        <animated.div style={overlayAnimation} className="absolute inset-0 flex flex-col items-center justify-end border-t-2 border-[#FF2A70]/50 pointer-events-none cursor-pointer">
           <div className="absolute top-0 left-0 w-0 h-0 border-t-80 border-t-[#FF2A70] border-r-80 border-r-transparent" />
           <div className="absolute right-0 w-0 h-0 border-b-80 border-b-[#FF2A70] border-l-80 border-l-transparent bottom-10" />
 
