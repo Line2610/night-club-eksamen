@@ -160,9 +160,8 @@ export default function Sektion3Client({ images }) {
             <div className="absolute right-0 bottom-0 w-0 h-0 border-b-60 border-b-[#FF2A70] border-l-60 border-l-transparent"></div>
           </div>
 
-          {/* Content - same width as image */}
+        
           <div className="bg-black text-white p-4 md:p-8">
-            {/* ✅ ændret fra h3 til metadata-tekst */}
             <p className="text-xs uppercase tracking-widest text-gray-400 mb-3 md:mb-4">
               {selectedImage.title}
             </p>
