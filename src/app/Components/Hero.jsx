@@ -20,7 +20,7 @@ const Hero = () => {
   if (isLoading && !hasStartedAnimation.current) {
     hasStartedAnimation.current = true;
 
-    // Loading animation med timer
+    // Loading animation with timers
     setTimeout(() => {
       setIsLoading(false);
       // Start logo animation

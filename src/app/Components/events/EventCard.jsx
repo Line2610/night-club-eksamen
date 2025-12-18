@@ -1,18 +1,23 @@
+// Denne komponent viser et eventkort med billede, dato, tid og mulighed for at booke
 'use client';
 import Image from "next/image";
 import { useSpring, animated } from "@react-spring/web";
 
+// Props: event (event data), index (kortets index), isHovered (om kortet er hovered), onHover (hover handler)
 export default function EventCard({ event, index, isHovered, onHover }) {
+  // Udtrækker dato, dag, måned og tid fra eventets dato
   const date = new Date(event.date);
   const day = date.getDate();
   const month = date.toLocaleString("en-US", { month: "short" });
   const time = date.toLocaleString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
 
+  // Funktion til at forkorte tekst, så den ikke fylder for meget på kortet
   const truncateText = (text, maxLength = 100) => {
     if (!text) return '';
     return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
   };
 
+  // Animation til overlay når man hover på kortet
   const overlayAnimation = useSpring({
     from: { opacity: 0 },
     to: { opacity: isHovered ? 1 : 0 },
@@ -20,16 +25,18 @@ export default function EventCard({ event, index, isHovered, onHover }) {
   });
 
   return (
-<div
-  className="min-w-full md:min-w-[50%] px-3 cursor-pointer"
-  onMouseEnter={() => onHover(index)}
-  onMouseLeave={() => onHover(null)}
-  onClick={() => onHover(isHovered ? null : index)}
->
-
+    // Hele kortet med hover-effekter og klik
+    <div
+      className="min-w-full md:min-w-[50%] px-3 cursor-pointer"
+      onMouseEnter={() => onHover(index)}
+      onMouseLeave={() => onHover(null)}
+      onClick={() => onHover(isHovered ? null : index)}
+    >
       <div className="relative h-96">
+        {/* Event billede */}
         <Image src={event.asset.url} alt={event.title} fill className="object-cover cursor-pointer" unoptimized />
 
+        {/* Overlay med Book Now knap og info, vises ved hover */}
         <animated.div style={overlayAnimation} className="absolute inset-0 flex flex-col items-center justify-end border-t-2 border-[#FF2A70]/50 pointer-events-none cursor-pointer">
           <div className="absolute top-0 left-0 w-0 h-0 border-t-80 border-t-[#FF2A70] border-r-80 border-r-transparent" />
           <div className="absolute right-0 w-0 h-0 border-b-80 border-b-[#FF2A70] border-l-80 border-l-transparent bottom-10" />
@@ -43,6 +50,7 @@ export default function EventCard({ event, index, isHovered, onHover }) {
           </div>
         </animated.div>
 
+        {/* Dato, tid og lokation i bunden af kortet */}
         <div className="absolute bottom-0 left-0 right-0 bg-[#FF2A70] p-3">
           <div className="flex items-center gap-4 text-white text-xs">
             <span className="font-semibold">{day} {month}</span>
