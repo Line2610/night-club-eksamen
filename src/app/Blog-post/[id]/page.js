@@ -12,9 +12,11 @@ const BlogPostPage = ({ params }) => {
             <Header />
             
             <main className='bg-black'>
+
                 <Hero2 title="Blog post" />
                 
                 {/* Suspense wrapper til async data loading med fallback */}
+                <Hero2 title="Blog post" />           
                 <Suspense fallback={<div className="text-white text-center py-8">Loading...</div>}>
                     <FetchBlogPost params={params} />
                 </Suspense>
@@ -63,6 +65,7 @@ async function addComment(formData) {
     }
 }
 
+
 // Server komponent til at hente blog post og kommentarer 
 async function FetchBlogPost({ params }) {
     // Afventer params da de kommer fra URL routing
@@ -70,6 +73,7 @@ async function FetchBlogPost({ params }) {
     const { id } = resolvedParams;
     
     try {
+
         // Parallel fetch af blog post og kommentarer for bedre performance
         const [blogResponse, commentsResponse] = await Promise.all([
             fetch(`http://localhost:4000/blogposts/${id}`, { cache: 'no-store' }), // Henter specifik blog post
@@ -172,6 +176,7 @@ async function FetchBlogPost({ params }) {
                         </h3>
                         
                         {/* Kommentar form der bruger Server Action */}
+
                         <form action={addComment} className="space-y-4">
                             {/* Skjult felt med blog post ID */}
                             <input type="hidden" name="blogpostId" value={id} />
