@@ -7,6 +7,8 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function Sektion3Client({ images }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  // Track which mobile image is active (tapped)
+  const [activeMobileIndex, setActiveMobileIndex] = useState(null);
 
   const handleImageClick = (image, index) => {
     setSelectedImage(image);
@@ -42,45 +44,49 @@ export default function Sektion3Client({ images }) {
     <section className="bg-black py-8 md:py-16">
       <div className="w-full">
         {/* Header */}
-        <motion.div
-          className="text-center mb-8 md:mb-12 px-4"
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-white text-2xl md:text-3xl tracking-wide">
+          <h2 className="text-white text-2xl md:text-3xl tracking-wide text-center">
             NIGHT CLUB GALLERY
           </h2>
-          <div className="mx-auto mt-4" style={{ width: "200px" }}>
+          <div className="mx-auto mt-4 mb-8" style={{ width: "400px" }}>
             <Image
               src="/assets/bottom_line2.png"
               alt="Underline"
-              width={200}
+              width={400}
               height={5}
             />
           </div>
-        </motion.div>
 
         {/* Mobile gallery*/}
         <div className="grid md:hidden grid-cols-1">
-          {images.map((image, index) => (
-            <button
-              key={index}
-              type="button"
-              className="relative w-full aspect-video overflow-hidden"
-              onClick={() => handleImageClick(image, index)}
-            >
-              <Image
-                src={image.src}
-                alt=""
-                fill
-                className="object-cover"
-                unoptimized
-                sizes="30vw"
-              />
-            </button>
-          ))}
+          {images.map((image, index) => {
+            const isActive = activeMobileIndex === index;
+            return (
+              <div key={index} className="relative w-full aspect-video overflow-hidden">
+                {/* trekant + border. Touch funktion */}
+                <div className={`absolute top-0 w-full h-1 bg-[#FF2A70] z-10 transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-0'}`} />
+                <div className={`absolute bottom-0 w-full h-1 bg-[#FF2A70] z-10 transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-0'}`} />
+                <div className={`absolute top-0 left-0 z-10 transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-0'}`}
+                  style={{ width: '60px', height: '60px', borderTop: '60px solid #FF2A70', borderRight: '60px solid transparent' }} />
+                <div className={`absolute bottom-0 right-0 z-10 transition-opacity duration-200 ${isActive ? 'opacity-100' : 'opacity-0'}`}
+                  style={{ width: '60px', height: '60px', borderBottom: '60px solid #FF2A70', borderLeft: '60px solid transparent' }} />
+                <button
+                  type="button"
+                  className="w-full h-full"
+                  onClick={() => setActiveMobileIndex(isActive ? null : index)}
+                  onMouseLeave={() => setActiveMobileIndex(null)}
+                >
+                  <Image
+                    src={image.src}
+                    alt=""
+                    fill
+                    className="object-cover"
+                    unoptimized
+                    sizes="30vw"
+                  />
+                </button>
+              </div>
+            );
+          })}
         </div>
 
         {/* Desktop gallery*/}
@@ -160,9 +166,8 @@ export default function Sektion3Client({ images }) {
             <div className="absolute right-0 bottom-0 w-0 h-0 border-b-60 border-b-[#FF2A70] border-l-60 border-l-transparent"></div>
           </div>
 
-          {/* Content - same width as image */}
+          {/* Content - samme bredde */}
           <div className="bg-black text-white p-4 md:p-8">
-            {/* ✅ ændret fra h3 til metadata-tekst */}
             <p className="text-xs uppercase tracking-widest text-gray-400 mb-3 md:mb-4">
               {selectedImage.title}
             </p>
