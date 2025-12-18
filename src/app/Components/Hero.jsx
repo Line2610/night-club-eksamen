@@ -9,7 +9,6 @@ import { redirect, revalidatePath } from "next/navigation";
 const BlogPostPage = ({ params }) => {
     return (
         <>
-            {/* Header navigation */}
             <Header />
             
             {/* Hoved indhold med sort baggrund */}
@@ -23,7 +22,6 @@ const BlogPostPage = ({ params }) => {
                 </Suspense>
             </main>
             
-            {/* Footer sektion */}
             <Footer />
         </>
     );
