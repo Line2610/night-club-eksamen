@@ -41,12 +41,12 @@ const LastestVideo = () => {
                         width={150}
                         height={20}
                         alt="bottom line"
-                        className="block w-32 sm:w-40 md:w-48 lg:w-56"
+                        className="block w-38 sm:w-4 md:w-48 lg:w-56"
                     />
                 </div>
 
                 {/* Carousel Section */}
-                <div className="w-full max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto">
+                <div className="w-full max-w-full xl:max-w-5xl mx-auto">
                     <Carousel className="w-full">
                         <CarouselContent>
                             {videos.map((video) => (

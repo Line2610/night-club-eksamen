@@ -10,7 +10,7 @@ const BlogPostPage = ({ params }) => {
         <>
             <Header />
             <main className='bg-black'>
-                <Hero2 title="Blog post" />
+                <Hero2 title="Blog post" />           
                 <Suspense fallback={<div className="text-white text-center py-8">Loading...</div>}>
                     <FetchBlogPost params={params} />
                 </Suspense>
@@ -45,7 +45,7 @@ async function addComment(formData) {
         });
 
         if (response.ok) {
-            // Revalidate cache for denne side
+            // Revalidate for denne side
             revalidatePath(`/Blog-post/${blogpostId}`);
             // Redirect til samme side for at vise ny kommentar
             redirect(`/Blog-post/${blogpostId}`);
@@ -55,13 +55,13 @@ async function addComment(formData) {
     }
 }
 
-// Async function - Server Component (INGEN useEffect!)
+// Async function - Server Component 
 async function FetchBlogPost({ params }) {
     const resolvedParams = await params;
     const { id } = resolvedParams;
     
     try {
-        // Fetch data på serveren - INGEN useEffect
+        // Fetch data på serveren 
         const [blogResponse, commentsResponse] = await Promise.all([
             fetch(`http://localhost:4000/blogposts/${id}`, { cache: 'no-store' }),
             fetch(`http://localhost:4000/comments?blogpostId=${id}`, { cache: 'no-store' })
@@ -148,7 +148,7 @@ async function FetchBlogPost({ params }) {
                         <h3 className="text-white text-xl font-bold mb-6 uppercase">
                             Leave a Comment
                         </h3>
-                        
+
                         <form action={addComment} className="space-y-4">
                             <input type="hidden" name="blogpostId" value={id} />
                             
