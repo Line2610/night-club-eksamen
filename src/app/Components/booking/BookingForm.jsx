@@ -1,11 +1,14 @@
+// BookingForm: Formular til at booke et bord. Indeholder felter for navn, email, bordnummer, gæster, dato, kontakt og kommentar
 export default function BookingForm({ formData, errors, handleInputChange, handleSubmit }) {
   return (
     <div className="max-w-5xl mx-auto">
       <h2 className="text-3xl font-bold tracking-[3px] mb-10">BOOK A TABLE</h2>
-      
+      {/* Formular til bordbooking */}
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+        {/* Navn og email felter */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
+            {/* Navn */}
             <input
               type="text"
               name="name"
@@ -18,6 +21,7 @@ export default function BookingForm({ formData, errors, handleInputChange, handl
             {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
           </div>
           <div>
+            {/* Email */}
             <input
               type="email"
               name="email"
@@ -31,8 +35,10 @@ export default function BookingForm({ formData, errors, handleInputChange, handl
           </div>
         </div>
 
+        {/* Bordnummer og antal gæster */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
+            {/* Bordnummer (readonly) */}
             <input
               type="text"
               name="tableNumber"
@@ -46,6 +52,7 @@ export default function BookingForm({ formData, errors, handleInputChange, handl
             {errors.tableNumber && <p className="text-red-500 text-sm mt-1">{errors.tableNumber}</p>}
           </div>
           <div>
+            {/* Antal gæster */}
             <input
               type="text"
               name="guests"
@@ -61,8 +68,10 @@ export default function BookingForm({ formData, errors, handleInputChange, handl
           </div>
         </div>
 
+        {/* Dato og kontakt info */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
+            {/* Dato vælger */}
             <select
               name="date"
               value={formData.date}
@@ -87,6 +96,7 @@ export default function BookingForm({ formData, errors, handleInputChange, handl
             {errors.date && <p className="text-red-500 text-sm mt-1">{errors.date}</p>}
           </div>
           <div>
+            {/* Kontakt telefonnummer */}
             <input
               type="tel"
               name="contact"
@@ -100,6 +110,7 @@ export default function BookingForm({ formData, errors, handleInputChange, handl
           </div>
         </div>
 
+        {/* Kommentar felt */}
         <textarea
           name="comment"
           placeholder="Your Comment"
@@ -109,6 +120,7 @@ export default function BookingForm({ formData, errors, handleInputChange, handl
           className="bg-transparent border border-white text-white px-5 py-4 outline-none placeholder-white"
         />
 
+        {/* Send knap */}
         <button
           type="submit"
           className="border-b border-t border-white px-6 py-2 self-end transition-all"
