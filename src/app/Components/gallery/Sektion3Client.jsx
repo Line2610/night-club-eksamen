@@ -44,7 +44,7 @@ export default function Sektion3Client({ images }) {
     <section className="bg-black py-8 md:py-16">
       <div className="w-full">
         {/* Header */}
-          <h2 className="text-white text-2xl md:text-3xl tracking-wide text-center">
+          <h2 className="text-white text-2xl md:text-3xl font-medium tracking-wide text-center">
             NIGHT CLUB GALLERY
           </h2>
           <div className="mx-auto mt-4 mb-8" style={{ width: "400px" }}>
