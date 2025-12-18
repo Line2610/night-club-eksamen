@@ -49,7 +49,6 @@ const Testimonials = () => {
 
   // Hvis der ikke er noget aktivt testimonial, returner ingenting
   if (!current) return null;
-
   // Byg den fulde URL til billedet eller brug fallback billede
   const imageUrl = current.asset?.url || "/assets/content-img/testimonial_2.jpg";
 
@@ -62,6 +61,7 @@ const Testimonials = () => {
 
       <div className="max-w-4xl mx-auto text-center relative z-10 px-6">
         {/* Profilbillede */}
+
         <Image src={imageUrl} alt={current.name || "Profile"} width={150} height={150} className="mx-auto rounded-lg mb-8" unoptimized />
 
         {/* Navn på personen */}

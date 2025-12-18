@@ -18,7 +18,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="bg-black to-pink-500 py-4 relative overflow-hidden">
+      <header className="bg-black to-pink-500 py-4 overflow-hidden sticky top-0 z-50">
         {/* Background overlay */}
         <div className="absolute inset-0 bg-black/30"></div>
         {/* Top border */}
@@ -26,10 +26,10 @@ const Header = () => {
         {/* Bottom border */}
         <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF2A70]"></div>
         {/* Triangles top - adjusted for mobile */}
-        <div className="absolute top-0 left-0 w-0 h-0 border-t-[60px] md:border-t-[80px] border-t-[#FF2A70] border-r-[60px] md:border-r-[80px] border-r-transparent"></div>
+        <div className="absolute top-0 left-0 w-0 h-0 border-t-60 md:border-t-80 border-t-[#FF2A70] border-r-60 md:border-r-80 border-r-transparent"></div>
 
         {/* Triangles bottom - adjusted for mobile */}
-        <div className="absolute right-0 w-0 h-0 border-b-[60px] md:border-b-[80px] border-b-[#FF2A70] border-l-[60px] md:border-l-[80px] border-l-transparent bottom-0"></div>
+        <div className="absolute right-0 w-0 h-0 border-b-60 md:border-b-80 border-b-[#FF2A70] border-l-60 md:border-l-80 border-l-transparent bottom-0"></div>
 
         <div className="max-w-7xl mx-auto flex justify-between items-center px-16 sm:px-20 md:px-6 relative z-10">
           {/* Logo - moved inward on mobile */}
@@ -47,7 +47,7 @@ const Header = () => {
                 <Image src="/assets/bottom_line2.png" width={50} height={50} alt="bottom line" className={`mt-1 transition-opacity ${isActive("/") ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
               </li>
               <li className="flex flex-col items-center group">
-                <a href="/Blog-post" className={`hover:text-[#FF2A70] pb-1 transition-all uppercase ${isActive("/Blog-post") ? "text-[#FF2A70]" : ""}`}>
+                <a href="/Blog" className={`hover:text-[#FF2A70] pb-1 transition-all uppercase ${isActive("/Blog") ? "text-[#FF2A70]" : ""}`}>
                   Blog
                 </a>
                 <Image src="/assets/bottom_line2.png" width={50} height={50} alt="bottom line" className={`mt-1 transition-opacity ${isActive("/Blog-post") ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
@@ -56,19 +56,13 @@ const Header = () => {
                 <a href="/Book-table" className={`hover:text-[#FF2A70] transition-all uppercase ${isActive("/Book-table") ? "text-[#FF2A70]" : ""}`}>
                   Book table
                 </a>
-                <Image src="/assets/bottom_line2.png" width={50} height={50} alt="bottom line" className={`mt-1 transition-opacity ${isActive("/Book-table") ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
+                <Image src="/assets/bottom_line2.png" width={50} height={50} alt="bottom line" className={`mt-1 transition-opacity ${isActive("/book-table") ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
               </li>
               <li className="flex flex-col items-center group">
                 <a href="/Contact-us" className={`hover:text-[#FF2A70] transition-all uppercase ${isActive("/Contact-us") ? "text-[#FF2A70]" : ""}`}>
                   Contact us
                 </a>
                 <Image src="/assets/bottom_line2.png" width={50} height={50} alt="bottom line" className={`mt-1 transition-opacity ${isActive("/Contact-us") ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
-              </li>
-              <li className="flex flex-col items-center group">
-                <a href="/login" className={`hover:text-[#FF2A70] transition-all uppercase ${isActive("/login") ? "text-[#FF2A70]" : ""}`}>
-                  Log in
-                </a>
-                <Image src="/assets/bottom_line2.png" width={50} height={50} alt="bottom line" className={`mt-1 transition-opacity ${isActive("/login") ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
               </li>
             </ul>
           </nav>
@@ -102,7 +96,7 @@ const Header = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="/Blog-post" className={`block hover:text-pink-500 transition-colors ${isActive("/Blog-post") ? "text-pink-500" : ""}`} onClick={toggleMenu}>
+                  <a href="/Blog" className={`block hover:text-pink-500 transition-colors ${isActive("/Blog") ? "text-pink-500" : ""}`} onClick={toggleMenu}>
                     BLOG
                   </a>
                 </li>
@@ -114,11 +108,6 @@ const Header = () => {
                 <li>
                   <a href="/Contact-us" className={`block hover:text-pink-500 transition-colors ${isActive("/Contact-us") ? "text-pink-500" : ""}`} onClick={toggleMenu}>
                     CONTACT US
-                  </a>
-                </li>
-                <li>
-                  <a href="/login" className={`block hover:text-pink-500 transition-colors ${isActive("/login") ? "text-pink-500" : ""}`} onClick={toggleMenu}>
-                    LOG IN
                   </a>
                 </li>
               </ul>
