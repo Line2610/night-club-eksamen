@@ -25,6 +25,7 @@ const Testimonials = () => {
     fetch("http://localhost:4000/testimonials")
       .then((res) => res.json())
       .then((data) => {
+        console.log("Testimonials data:", data); // Debug log for at se data struktur
         setTestimonials(data);
         setIsLoading(false);
       })
@@ -43,6 +44,14 @@ const Testimonials = () => {
     );
   }
 
+  // Vis besked hvis ingen testimonials er tilgængelige
+  if (!testimonials.length) {
+    return (
+      <section className="bg-black py-20 flex items-center justify-center">
+        <div className="text-white text-xl">No testimonials available</div>
+      </section>
+    );
+  }
 
   // Hent det nuværende aktive testimonial
   const current = testimonials[activeTestimonial];
@@ -50,8 +59,15 @@ const Testimonials = () => {
   // Hvis der ikke er noget aktivt testimonial, returner ingenting
   if (!current) return null;
 
-  // Byg den fulde URL til billedet eller brug fallback billede
-  const imageUrl = current.asset?.url || "/assets/content-img/testimonial_2.jpg";
+// Henter billede URL fra testimonial data med fallback til default billede
+// current.asset?.url - API billede (hvis det eksisterer)
+// || - fallback operator
+// "/assets/content-img/testimonial_2.jpg" - standard billede hvis API billede mangler
+  const imageUrl =
+  current.asset?.url || "/assets/content-img/testimonial_2.jpg";
+
+  console.log("Current testimonial:", current); // Debug log
+  console.log("Image URL:", imageUrl); // Debug log
 
   return (
     <section className="bg-black py-20 relative overflow-hidden">
@@ -61,8 +77,16 @@ const Testimonials = () => {
       </div>
 
       <div className="max-w-4xl mx-auto text-center relative z-10 px-6">
-        {/* Profilbillede */}
-        <Image src={imageUrl} alt={current.name || "Profile"} width={150} height={150} className="mx-auto rounded-lg mb-8" unoptimized />
+        {/* Profilbillede med key prop for at tvinge re-render */}
+        <Image 
+          key={activeTestimonial} // Vigtig: tvinger billedet til at re-render
+          src={imageUrl} 
+          alt={current.name || "Profile"} 
+          width={150} 
+          height={150} 
+          className="mx-auto rounded-lg mb-8" 
+          unoptimized 
+        />
 
         {/* Navn på personen */}
         <h3 className="text-white text-2xl font-bold mb-8 tracking-widest">{current.name?.toUpperCase()}</h3>
@@ -88,7 +112,10 @@ const Testimonials = () => {
           {testimonials.map((_, index) => (
             <button 
               key={index} 
-              onClick={() => setActiveTestimonial(index)} 
+              onClick={() => {
+                console.log("Switching to testimonial:", index); // Debug log
+                setActiveTestimonial(index);
+              }} 
               className={`w-3 h-3 cursor-pointer ${activeTestimonial === index ? "bg-[#FF2A70]" : "bg-white"}`} 
             />
           ))}
