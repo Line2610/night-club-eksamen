@@ -1,3 +1,5 @@
+"use client";
+
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -13,10 +15,12 @@ const BlogCard = ({ post, index, isLast = false }) => {
                <Link href={`/Blog-post/${post.id}`}> 
                     {/* Responsivt billede med fallback hvis post ikke har billede */}
                     <Image
-                        src={post.assets?.url || '/assets/content-img/blog_full1.jpg'}
+                        src={post.asset?.url}
                         alt={post.title}
                         fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
                         className="object-cover"
+                        unoptimized
                     />
                 </Link>
             </div>
@@ -44,14 +48,19 @@ const BlogCard = ({ post, index, isLast = false }) => {
                 <p className="text-gray-300 font-semibold text-sm mb-6 leading-relaxed">
                     {post.content?.substring(0, 300) + '...'}
                 </p>
+
             
             {/* "Read More" knap sektion - højre-justeret */}
             <div className='flex justify-end'>
+
+            <div className='flex justify-center md:justify-center lg:justify-end'>
                 <div className="inline-block">
                     {/* Øverste dekorativ linje */}
                     <div className="border-t border-white w-30 mb-2"></div>
                     
+
                     {/* "Read More" link - bruger URL parameter med post ID */}
+
                     <Link 
                         href={`/Blog-post/${post.id}`} 
                         className="bg-transparent font-bold text-center text-white text-sm uppercase block hover:text-[#FF2A70] py-2"

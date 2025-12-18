@@ -1,17 +1,14 @@
-import Header from "../Components/Header";
-import Footer from "../Components/Footer";
-import Hero2 from "../Components/Hero2";
 
-const bookTable = () => {
-    return ( 
-        <>
-        <Header />
-            <main className='bg-black'>
-                <Hero2 title="Book table" />
-            </main>
-            <Footer />
-        </>
-     );
+import BookTable from '../Components/booking/BookTable';
+
+async function getReservations() {
+  const res = await fetch('http://localhost:4000/reservations', { cache: 'no-store' });
+  if (!res.ok) return [];
+  const data = await res.json();
+  return data.filter(res => res.table && res.date);
 }
- 
-export default bookTable;
+
+export default async function BookTablePage() {
+  const reservations = await getReservations();
+  return <BookTable reservations={reservations} />;
+}
