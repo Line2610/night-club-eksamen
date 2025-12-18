@@ -1,38 +1,28 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import EventCard from "./EventCard";
 
 export default function Sektion2Client({ events }) {
+
+  // Sæt initial værdi baseret på window.innerWidth
+  const getInitialEventsPerSlide = () => {
+    if (typeof window !== "undefined") {
+      return window.innerWidth >= 768 ? 2 : 1;
+    }
+    return 1; // fallback for SSR
+  };
+
+  const [eventsPerSlide] = useState(getInitialEventsPerSlide);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState(null);
-  const [eventsPerSlide, setEventsPerSlide] = useState(1);
 
-  // Responsive: 1 pr slide < md, ellers 2 pr slide
-  useEffect(() => {
-    const update = () => {
-      if (typeof window === "undefined") return;
-      setEventsPerSlide(window.innerWidth >= 768 ? 2 : 1); // md breakpoint
-    };
-
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-
-  const totalSlides = useMemo(() => {
-    return Math.max(1, Math.ceil((events?.length || 0) / eventsPerSlide));
-  }, [events?.length, eventsPerSlide]);
-
-  // Hvis eventsPerSlide ændrer sig (resize), så clamp currentSlide
-  useEffect(() => {
-    setCurrentSlide((prev) => Math.min(prev, totalSlides - 1));
-  }, [totalSlides]);
+  const totalSlides = Math.max(1, Math.ceil((events?.length || 0) / eventsPerSlide));
 
   return (
     <>
-      <h2 className="text-center text-2xl md:text-3xl mb-2 text-white font-bold tracking-wide">
+      <h2 className="text-center text-2xl font-medium md:text-3xl mb-2 text-white tracking-wide">
         EVENTS OF THE MONTH
       </h2>
 
@@ -81,7 +71,7 @@ export default function Sektion2Client({ events }) {
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
-              className={`w-3 h-3 transition-colors ${
+              className={`w-3 h-3 transition-colors cursor-pointer ${
                 index === currentSlide ? "bg-[#FF2A70]" : "bg-white"
               }`}
               style={{ borderRadius: 0 }}
