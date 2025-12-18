@@ -166,11 +166,9 @@ export default function Sektion3Client({ images }) {
             <div className="absolute right-0 bottom-0 w-0 h-0 border-b-60 border-b-[#FF2A70] border-l-60 border-l-transparent"></div>
           </div>
 
-<<<<<<< HEAD
-        
-=======
+
+    
           {/* Content - samme bredde */}
->>>>>>> 9751cf19aa05facb2e84e5a4dd87d91e937f2430
           <div className="bg-black text-white p-4 md:p-8">
             <p className="text-xs uppercase tracking-widest text-gray-400 mb-3 md:mb-4">
               {selectedImage.title}
