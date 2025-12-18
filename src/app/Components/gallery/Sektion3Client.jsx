@@ -176,9 +176,10 @@ export default function Sektion3Client({ images }) {
           <div className="bg-black text-white p-4 md:p-8">
             <p className="text-xs uppercase tracking-widest text-gray-400 mb-3 md:mb-4">
               {selectedImage.title}
-            {/* Content - samme bredde */}
             </p>
-
+            <p className="text-xs md:text-s text-gray-300 leading-relaxed mb-4 md:mb-6">
+              {selectedImage.description}
+            </p>
             <div className="flex justify-end">
               <button className="border-white border-t border-b text-white px-4 md:px-8 py-1 md:py-2 text-sm md:text-base">
                 READ MORE
