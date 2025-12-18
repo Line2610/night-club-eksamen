@@ -74,6 +74,7 @@ const BlogCard = ({ post, index, isLast = false }) => {
             </div>
             </div>
         </div>
+        </div>
     );
 };
 
