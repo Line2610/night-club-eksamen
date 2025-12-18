@@ -72,7 +72,8 @@ const Sektion1 = () => {
         <h2 className="uppercase text-center text-3xl text-white font-medium tracking-wider mb-2">Welcome in nightclub</h2>
 
         {/* Dekorativ bundlinje under titlen */}
-        <Image src="/assets/bottom_line2.png" width={400} height={50} alt="decorative line" className="mx-auto block" />
+        
+        <Image src="/assets/bottom_line2.png" width={300} height={50} alt="decorative line" className="mx-auto block" />
 
         {/* Container for billedkortene - responsivt flex layout */}
         <div className="flex flex-wrap gap-4 justify-center mt-8 mb-16">
