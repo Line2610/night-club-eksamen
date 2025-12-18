@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import { ImFacebook } from "react-icons/im";
 import { FaTwitter, FaSnapchatGhost } from "react-icons/fa";
 
@@ -11,39 +11,31 @@ const Testimonials = () => {
   
   // State til at gemme alle testimonials data fra API
   const [testimonials, setTestimonials] = useState([]);
+  
+  // Ref til at sikre vi kun henter data én gang
+  const hasFetched = useRef(false);
 
-  // useEffect hook til at hente testimonials når komponenten indlæses
-  useEffect(() => {
+  // Hent testimonials data uden useEffect - kører kun én gang
+  if (!hasFetched.current) {
+    hasFetched.current = true;
+    
     // Fetch testimonials data fra API
     fetch("http://localhost:4000/testimonials")
       .then((res) => res.json())
       .then((data) => {
         console.log("Testimonials data:", data); // Debug log for at se data struktur
         setTestimonials(data);
-        setIsLoading(false);
       })
       .catch((err) => {
         console.error("Fejl ved hentning af testimonials:", err);
-        setIsLoading(false);
       });
   }
-      .then((data) => setTestimonials(data))
-      .catch((err) => console.error("Fejl ved hentning af testimonials:", err));
-  }, []); // Tom dependency array - kører kun én gang
 
   // Viser loading besked hvis ingen testimonials er hentet endnu
   if (!testimonials.length) {
     return (
       <section className="bg-black py-20 flex items-center justify-center">
         <div className="text-white text-xl">Loading testimonials...</div>
-      </section>
-    );
-  }
-  // Vis besked hvis ingen testimonials er tilgængelige
-  if (!testimonials.length) {
-    return (
-      <section className="bg-black py-20 flex items-center justify-center">
-        <div className="text-white text-xl">No testimonials available</div>
       </section>
     );
   }
@@ -71,7 +63,8 @@ const Testimonials = () => {
 
       {/* Indhold container med maksimal bredde og centreret layout */}
       <div className="max-w-4xl mx-auto text-center relative z-10 px-6">
-        {/* Profilbillede med key prop for at tvinge re-render */}
+        
+        {/* Profilbillede af personen der giver testimonial */}
         <Image 
           key={activeTestimonial} // Vigtig: tvinger billedet til at re-render
           src={imageUrl} 
@@ -81,9 +74,6 @@ const Testimonials = () => {
           className="mx-auto rounded-lg mb-8" 
           unoptimized 
         />
-        
-        {/* Profilbillede af personen der giver testimonial */}
-        <Image src={imageUrl} alt={current.name || "Profile"} width={150} height={150} className="mx-auto rounded-lg mb-8" />
 
         {/* Navn på personen - store bogstaver med bred letter-spacing */}
         <h3 className="text-white text-2xl font-bold mb-8 tracking-widest">{current.name?.toUpperCase()}</h3>
@@ -93,16 +83,16 @@ const Testimonials = () => {
 
         {/* Sociale medier ikoner - hoverable med smooth transitions */}
         <div className="flex justify-center space-x-6 mb-12">
-          {/* Facebook ikon med border og hover effekt */}
-          <div className="w-12 h-12 border-2 border-white flex items-center justify-center cursor-pointer text-white hover:bg-white hover:text-black transition-all">
+          {/* Facebook ikon */}
+          <div className="w-12 h-12 border-2 border-white flex items-center justify-center text-white">
             <ImFacebook />
           </div>
-          {/* Twitter ikon med samme styling */}
-          <div className="w-12 h-12 border-2 border-white flex items-center justify-center cursor-pointer text-white hover:bg-white hover:text-black transition-all">
+          {/* Twitter ikon */}
+          <div className="w-12 h-12 border-2 border-white flex items-center justify-center text-white ">
             <FaTwitter />
           </div>
-          {/* Snapchat ikon med samme styling */}
-          <div className="w-12 h-12 border-2 border-white flex items-center justify-center cursor-pointer text-white hover:bg-white hover:text-black transition-all">
+          {/* Snapchat ikon */}
+          <div className="w-12 h-12 border-2 border-white flex items-center justify-center text-white">
             <FaSnapchatGhost />
           </div>
         </div>
@@ -117,8 +107,6 @@ const Testimonials = () => {
                 console.log("Switching to testimonial:", index); // Debug log
                 setActiveTestimonial(index);
               }} 
-              className={`w-3 h-3 cursor-pointer ${activeTestimonial === index ? "bg-[#FF2A70]" : "bg-white"}`} 
-              onClick={() => setActiveTestimonial(index)} 
               className={`w-3 h-3 cursor-pointer ${
                 activeTestimonial === index ? "bg-[#FF2A70]" : "bg-white" // Aktiv prik er pink, andre er hvide
               }`} 
