@@ -19,7 +19,6 @@ async function getGallery() {
     return gridAreas[index % gridAreas.length];
   };
 
-  // Beholder præcis som du skrev (hardcoded title + description)
   const images = data.slice(0, 7).map((item, index) => ({
     src: item.asset.url,
     gridArea: getGridArea(index),

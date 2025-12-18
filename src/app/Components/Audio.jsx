@@ -97,7 +97,7 @@ export default function App() {
               className="w-full h-auto object-cover"
             />
           </div>
-          {/* Afspiller og titel vises altid */}
+          {/* Afspiller og titel*/}
           <div className="flex flex-col gap-5 w-full lg:flex-1">
             <h3 className="text-white text-2xl font-semibold tracking-wide">
               {currentTrack.title}
@@ -173,7 +173,7 @@ export default function App() {
       {/* Mobil: ét billede ad gangen, fuld bredde, knapper under billedet, alt centreret */}
       <div className="flex flex-col items-center gap-4 md:hidden mt-8 w-full h-70">
         <div
-          className="relative w-full max-w-[400px] mx-auto aspect-[2/1] cursor-pointer"
+          className="relative w-full max-w-[400px] mx-auto aspect-2/1 cursor-pointer"
           style={{ height: '200px' }}
           onClick={() => {
             if (!isPlaying) {
