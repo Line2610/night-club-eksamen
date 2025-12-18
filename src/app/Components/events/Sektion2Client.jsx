@@ -25,11 +25,11 @@ export default function Sektion2Client({ events }) {
       <h2 className="text-center text-2xl font-medium md:text-3xl mb-2 text-white tracking-wide">
         EVENTS OF THE MONTH
       </h2>
-   <div className="mx-auto mt-4 mb-8" style={{ width: "400px" }}>
+   <div className="mx-auto mt-4 mb-8" style={{ width: "300px" }}>
             <Image
               src="/assets/bottom_line2.png"
               alt="Underline"
-              width={400}
+              width={300}
               height={5}
             />
           </div>

@@ -47,11 +47,11 @@ export default function Sektion3Client({ images }) {
           <h2 className="text-white text-2xl md:text-3xl font-medium tracking-wide text-center">
             NIGHT CLUB GALLERY
           </h2>
-          <div className="mx-auto mt-4 mb-8" style={{ width: "400px" }}>
+          <div className="mx-auto mt-4 mb-8" style={{ width: "300px" }}>
             <Image
               src="/assets/bottom_line2.png"
               alt="Underline"
-              width={400}
+              width={300}
               height={5}
             />
           </div>
