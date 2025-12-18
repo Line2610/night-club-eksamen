@@ -59,12 +59,12 @@ const Testimonials = () => {
   // Hvis der ikke er noget aktivt testimonial, returner ingenting
   if (!current) return null;
 
-// Henter billede URL fra testimonial data med fallback til default billede
-// current.asset?.url - API billede (hvis det eksisterer)
-// || - fallback operator
-// "/assets/content-img/testimonial_2.jpg" - standard billede hvis API billede mangler
-  const imageUrl =
-  current.asset?.url || "/assets/content-img/testimonial_2.jpg";
+
+  // Henter billede URL fra testimonial data med fallback til default billede
+  // current.asset?.url - API billede (hvis det eksisterer)
+  // || - fallback operator
+  // "/assets/content-img/testimonial_2.jpg" - standard billede hvis API billede mangler
+  const imageUrl = current.asset?.url || "/assets/content-img/testimonial_2.jpg";
 
   console.log("Current testimonial:", current); // Debug log
   console.log("Image URL:", imageUrl); // Debug log
